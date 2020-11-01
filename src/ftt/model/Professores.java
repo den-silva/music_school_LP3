@@ -19,6 +19,13 @@ public class Professores {
 	public void setId_professor(int id_professor) {
 		this.id_professor = id_professor;
 	}
+	
+	public void setId_professor(String id_professor) {
+		if (id_professor ==null)
+			this.setId_professor(0);
+		else			
+			this.id_professor = Integer.valueOf(id_professor);
+	}
 
 	public String getNome() {
 		return nome;
