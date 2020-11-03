@@ -2,5 +2,5 @@ driver=com.mysql.cj.jdbc.Driver
 dbUser=DEV
 dbPwd=bR@Cl2811
 dbPwd2=cL@Br2811
-dbUrl=jdbc:mysql://localhost:3306/ftt?useTimezone=true&serverTimezone=UTC
+dbUrl=jdbc:mysql://localhost:3306/escola_de_musica?useTimezone=true&serverTimezone=UTC
 useSSL=false
