@@ -18,6 +18,16 @@ public class Alunos {
 	public void setId_aluno(int id_aluno) {
 		this.id_aluno = id_aluno;
 	}
+	
+	//Metodo setId_Aluno sobrescrito para receber String
+	public void setId_aluno(String id_aluno) {
+		if(id_aluno == null || id_aluno.isEmpty()) {
+			this.id_aluno = 0;
+		}else {
+			this.id_aluno = Integer.valueOf(id_aluno);
+		}	
+		
+	}
 
 	public String getNome() {
 		return nome;
