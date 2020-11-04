@@ -29,9 +29,9 @@ public class DbUtil {
 				prop.load(inputStream);
      
 				driver = prop.getProperty("driver");
-	            url = prop.getProperty("url");
-	            user = prop.getProperty("user");
-	            password = prop.getProperty("password");
+	            url = prop.getProperty("dbUrl");
+	            user = prop.getProperty("dbUser");
+	            password = prop.getProperty("dbPwd");
 	                
 	            //Log
 				System.out.println(driver + " - " + url + " - " + new Date());
