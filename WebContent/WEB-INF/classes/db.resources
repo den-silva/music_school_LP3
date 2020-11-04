@@ -1,4 +1,0 @@
-driver=com.mysql.cj.jdbc.Driver
-dbUser=alipio
-dbPwd=Brq18_2929
-dbUrl=jdbc:mysql://localhost:3306/escola_de_musica
