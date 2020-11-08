@@ -9,7 +9,8 @@ public enum EnumNivelCurso {
 	EnumNivelCurso(String _nivel) {
 		
 		this.nivel = _nivel;
-	}
+	}	
+	
 
 	public String getNivelCurso() {
 		return nivel;

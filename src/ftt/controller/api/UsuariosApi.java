@@ -66,7 +66,7 @@ public class UsuariosApi extends HttpServlet {
 		Gson gson = new Gson();
 		UsuariosDao dao = new UsuariosDao();
 
-		if (request.getParameter("id_aluno") != null) {
+		if (request.getParameter("id_usuario") != null) {
 			int idReq = Integer.valueOf(request.getParameter("id_usuario"));
 
 			try {

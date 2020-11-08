@@ -18,7 +18,7 @@ public class Usuarios {
 		this.id_usuario = id_usuario;
 	}
 	
-	//Metodo setId_Aluno sobrescrito para receber String
+	//Metodo setId_Usuario sobrescrito para receber String
 	public void setId_usuario(String id_usuario) {
 		if(id_usuario == null || id_usuario.isEmpty()) {
 			this.id_usuario = 0;

@@ -18,20 +18,26 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import ftt.dao.AlunosDao;
+import ftt.dao.TurmasDao;
+import ftt.dao.UsuariosDao;
+import ftt.enums.EnumNivelCurso;
 import ftt.model.Alunos;
 import ftt.model.Endereco;
+import ftt.model.MetodosGerais;
+import ftt.model.Turmas;
+import ftt.model.Usuarios;
 
 /**
  * Servlet implementation class AlunosApi
  */
-@WebServlet("/AlunosApi")
-public class AlunosApi extends HttpServlet {
+@WebServlet("/TurmasApi")
+public class TurmasApi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AlunosApi() {
+	public TurmasApi() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -62,14 +68,15 @@ public class AlunosApi extends HttpServlet {
 		response.setContentType("application/json");// Mime type
 
 		Gson gson = new Gson();
-		AlunosDao dao = new AlunosDao();
+		TurmasDao dao = new TurmasDao();
 
-		if (request.getParameter("id_aluno") != null) {
-			int idReq = Integer.valueOf(request.getParameter("id_aluno"));
+		if (request.getParameter("id_turma") != null) {
+			int idReq = Integer.valueOf(request.getParameter("id_turma"));
 
 			try {
-				Alunos aluno = dao.findForId(idReq);
-				response.getWriter().append(gson.toJson(aluno));
+				Turmas turma = dao.findForId(idReq);
+
+				response.getWriter().append(gson.toJson(turma));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -77,14 +84,13 @@ public class AlunosApi extends HttpServlet {
 
 		} else {
 			try {
-				ArrayList<Alunos> listaAlunos = dao.findAll();			
+				ArrayList<Turmas> listaTurmas = dao.findAll();
 
-				response.getWriter().append(gson.toJson(listaAlunos));
+				response.getWriter().append(gson.toJson(listaTurmas));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 
 		// response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -101,34 +107,37 @@ public class AlunosApi extends HttpServlet {
 		response.setCharacterEncoding("ISO-8859-1");
 		response.setContentType("application/json");// Mime type
 
-		Alunos aluno = new Alunos();
-		AlunosDao dao = new AlunosDao();
+		Turmas turma = new Turmas();
+		TurmasDao dao = new TurmasDao();
 		Gson gg = new Gson();
 
-		aluno.setId_aluno(request.getParameter("id_aluno"));
-		aluno.setNome(request.getParameter("nome"));
+		turma.setId_turma(request.getParameter("id_turma"));
+		turma.setId_curso(request.getParameter("id_curso"));
+		turma.setNome_curso(request.getParameter("nome_curso"));
+		turma.setId_professor(request.getParameter("id_professor"));
+		turma.setNome_professor(request.getParameter("nome_professor"));
+		String retNivel = request.getParameter("nivel");
 
-		Endereco end = new Endereco();
-		end.setRua(request.getParameter("rua"));
-		end.setNumero(request.getParameter("numero"));
-		end.setBairro(request.getParameter("bairro"));
-		end.setCidade(request.getParameter("cidade"));
-		end.setUf(request.getParameter("uf"));
-		end.setComplemento(request.getParameter("complemento"));
+		turma.setNivel(MetodosGerais.stringParaEnumNivel(retNivel));
 
-		aluno.setEndereco(end);
-		aluno.setEmail(request.getParameter("email"));
-		aluno.setSenha(request.getParameter("senha"));
+//		if (retNivel == EnumNivelCurso.BASICO.getNivelCurso()) {
+//			turma.setNivel(EnumNivelCurso.BASICO);
+//		} else if (retNivel == EnumNivelCurso.INTERMEDIARIO.getNivelCurso()) {
+//			turma.setNivel(EnumNivelCurso.INTERMEDIARIO);
+//		} else {
+//			turma.setNivel(EnumNivelCurso.AVANCADO);
+//		}
 
 		try {
-			dao.insert(aluno);
-			System.out.println("Aluno inserido com sucesso!!");
+			dao.insert(turma);
+			System.out.println("Turma inserida com sucesso!! " + turma.getId_turma() + " Professor: "
+					+ turma.getNome_professor() + " Curso: " + turma.getNome_curso());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		String json = gg.toJson(aluno);
+		String json = gg.toJson(turma);
 		response.getWriter().append("[{\"status\":\"ok\",\"timestemp\":\"" + new Date() + "\"}, ").append(json)
 				.append("]");
 
@@ -150,36 +159,30 @@ public class AlunosApi extends HttpServlet {
 		response.setCharacterEncoding("ISO-8859-1");
 		response.setContentType("application/json");// Mime type
 
+		Turmas turma = new Turmas();
+		TurmasDao dao = new TurmasDao();
 		Gson gg = new Gson();
 
-		Alunos aluno = new Alunos();
+		turma.setId_turma(request.getParameter("id_turma"));
+		turma.setId_curso(request.getParameter("id_curso"));
+		turma.setNome_curso(request.getParameter("nome_curso"));
+		turma.setId_professor(request.getParameter("id_professor"));
+		turma.setNome_professor(request.getParameter("nome_professor"));
+		String retNivel = request.getParameter("nivel");
 
-		AlunosDao dao = new AlunosDao();
+		turma.setNivel(MetodosGerais.stringParaEnumNivel(retNivel));
 
-		aluno.setId_aluno(request.getParameter("id_aluno"));
-		aluno.setNome(request.getParameter("nome"));
-		// Separando os requests na classe endereço
-		Endereco end = new Endereco();
-		end.setRua(request.getParameter("rua"));
-		end.setNumero(request.getParameter("numero"));
-		end.setBairro(request.getParameter("bairro"));
-		end.setCidade(request.getParameter("cidade"));
-		end.setUf(request.getParameter("uf"));
-		end.setComplemento(request.getParameter("complemento"));
-
-		aluno.setEndereco(end);// Adicionando endereço
-		aluno.setEmail(request.getParameter("email"));
-		aluno.setSenha(request.getParameter("senha"));
-		System.out.println(request.getParameter("nome"));
 		try {
-			dao.update(aluno);
-			System.out.println("Aluno alterado com sucesso!! " + aluno.getId_aluno() + " " + aluno.getNome());
+			dao.update(turma);
+
+			System.out.println("Turma alterada com sucesso!! " + turma.getId_turma() + " Professor: "
+					+ turma.getNome_professor() + " Curso: " + turma.getNome_curso());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		String json = gg.toJson(aluno);
+		String json = gg.toJson(turma);
 		response.getWriter().append("[{\"status\":\"Atualizado ok\",\"timestemp\":\"" + new Date() + "\"}, ")
 				.append(json).append("]");
 
@@ -196,16 +199,17 @@ public class AlunosApi extends HttpServlet {
 		response.setContentType("application/json");// Mime type
 
 		Gson gson = new Gson();
-		AlunosDao dao = new AlunosDao();
-		Alunos aluno = new Alunos();
-		aluno.setId_aluno(request.getParameter("id_aluno"));
+		TurmasDao dao = new TurmasDao();
+		Turmas turma = new Turmas();
+		turma.setId_turma(request.getParameter("id_turma"));
 
 		try {
-			dao.delete(aluno);
-			System.out.println("Aluno excluido com sucesso!! " + aluno.getId_aluno() + " " + aluno.getNome());
+			dao.delete(turma);
+			System.out.println("Turma excluida com sucesso!! " + turma.getId_turma() + " Professor: "
+					+ turma.getNome_professor() + " Curso: " + turma.getNome_curso());
 
 			response.getWriter().append("[{\"status\":\"Deletado ok\",\"timestemp\":\"" + new Date() + "\"}, ")
-					.append(gson.toJson(aluno.getId_aluno())).append("]");
+					.append(gson.toJson(turma.getId_turma())).append("]");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -21,7 +21,7 @@ public class CursosDao implements IcrudPadrao<Cursos>{
 	public void insert(Cursos entidade) throws SQLException {
 		// TODO Auto-generated method stub
 		try(PreparedStatement ps = con.prepareStatement("INSERT INTO tb_cursos"
-				+ "(nome) " + "VALUES (?)")){
+				+ " (nome) " + "VALUES (?)")){
 			ps.setString(1, entidade.getNome());
 			
 			ps.executeUpdate();
