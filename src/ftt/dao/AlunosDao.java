@@ -74,8 +74,7 @@ public class AlunosDao implements IcrudPadrao<Alunos> {
 	public void delete(Alunos entidade) throws SQLException {
 		// TODO Auto-generated method stub
 		System.out.println("Inicio DELETE");
-		String query = "DELETE FROM tb_alunos WHERE id_aluno = ?";
-		Alunos aluno = new Alunos();
+		String query = "DELETE FROM tb_alunos WHERE id_aluno = ?";		
 
 		try (PreparedStatement ps = con.prepareStatement(query)) {
 			ps.setInt(1, entidade.getId_aluno());			
