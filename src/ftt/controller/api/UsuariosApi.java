@@ -18,20 +18,22 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import ftt.dao.AlunosDao;
+import ftt.dao.UsuariosDao;
 import ftt.model.Alunos;
 import ftt.model.Endereco;
+import ftt.model.Usuarios;
 
 /**
  * Servlet implementation class AlunosApi
  */
-@WebServlet("/AlunosApi")
-public class AlunosApi extends HttpServlet {
+@WebServlet("/UsuariosApi")
+public class UsuariosApi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AlunosApi() {
+	public UsuariosApi() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -62,14 +64,15 @@ public class AlunosApi extends HttpServlet {
 		response.setContentType("application/json");// Mime type
 
 		Gson gson = new Gson();
-		AlunosDao dao = new AlunosDao();
+		UsuariosDao dao = new UsuariosDao();
 
-		if (request.getParameter("id_aluno") != null) {
-			int idReq = Integer.valueOf(request.getParameter("id_aluno"));
+		if (request.getParameter("id_usuario") != null) {
+			int idReq = Integer.valueOf(request.getParameter("id_usuario"));
 
 			try {
-				Alunos aluno = dao.findForId(idReq);
-				response.getWriter().append(gson.toJson(aluno));
+				Usuarios usuario = dao.findForId(idReq);
+
+				response.getWriter().append(gson.toJson(usuario));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -77,9 +80,9 @@ public class AlunosApi extends HttpServlet {
 
 		} else {
 			try {
-				ArrayList<Alunos> listaAlunos = dao.findAll();			
+				ArrayList<Usuarios> listaUsuarios = dao.findAll();
 
-				response.getWriter().append(gson.toJson(listaAlunos));
+				response.getWriter().append(gson.toJson(listaUsuarios));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -101,34 +104,23 @@ public class AlunosApi extends HttpServlet {
 		response.setCharacterEncoding("ISO-8859-1");
 		response.setContentType("application/json");// Mime type
 
-		Alunos aluno = new Alunos();
-		AlunosDao dao = new AlunosDao();
+		Usuarios usuario = new Usuarios();
+		UsuariosDao dao = new UsuariosDao();
 		Gson gg = new Gson();
 
-		aluno.setId_aluno(request.getParameter("id_aluno"));
-		aluno.setNome(request.getParameter("nome"));
-
-		Endereco end = new Endereco();
-		end.setRua(request.getParameter("rua"));
-		end.setNumero(request.getParameter("numero"));
-		end.setBairro(request.getParameter("bairro"));
-		end.setCidade(request.getParameter("cidade"));
-		end.setUf(request.getParameter("uf"));
-		end.setComplemento(request.getParameter("complemento"));
-
-		aluno.setEndereco(end);
-		aluno.setEmail(request.getParameter("email"));
-		aluno.setSenha(request.getParameter("senha"));
+		usuario.setId_usuario(request.getParameter("id_usuario"));
+		usuario.setEmail(request.getParameter("email"));
+		usuario.setSenha(request.getParameter("senha"));
 
 		try {
-			dao.insert(aluno);
-			System.out.println("Aluno inserido com sucesso!!");
+			dao.insert(usuario);
+			System.out.println("Usuario inserido com sucesso!! " + usuario.getId_usuario() + " " + usuario.getEmail());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		String json = gg.toJson(aluno);
+		String json = gg.toJson(usuario);
 		response.getWriter().append("[{\"status\":\"ok\",\"timestemp\":\"" + new Date() + "\"}, ").append(json)
 				.append("]");
 
@@ -152,34 +144,25 @@ public class AlunosApi extends HttpServlet {
 
 		Gson gg = new Gson();
 
-		Alunos aluno = new Alunos();
+		Usuarios usuario = new Usuarios();
 
-		AlunosDao dao = new AlunosDao();
+		UsuariosDao dao = new UsuariosDao();
 
-		aluno.setId_aluno(request.getParameter("id_aluno"));
-		aluno.setNome(request.getParameter("nome"));
-		// Separando os requests na classe endereço
-		Endereco end = new Endereco();
-		end.setRua(request.getParameter("rua"));
-		end.setNumero(request.getParameter("numero"));
-		end.setBairro(request.getParameter("bairro"));
-		end.setCidade(request.getParameter("cidade"));
-		end.setUf(request.getParameter("uf"));
-		end.setComplemento(request.getParameter("complemento"));
+		usuario.setId_usuario(request.getParameter("id_usuario"));
+		usuario.setEmail(request.getParameter("email"));
+		usuario.setSenha(request.getParameter("senha"));
 
-		aluno.setEndereco(end);// Adicionando endereço
-		aluno.setEmail(request.getParameter("email"));
-		aluno.setSenha(request.getParameter("senha"));
-		System.out.println(request.getParameter("nome"));
 		try {
-			dao.update(aluno);
-			System.out.println("Aluno alterado com sucesso!! " + aluno.getId_aluno() + " " + aluno.getNome());
+			dao.update(usuario);
+
+			System.out.println("Usuario alterado com sucesso!! " 
+			+ usuario.getId_usuario() + " " + usuario.getEmail());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		String json = gg.toJson(aluno);
+		String json = gg.toJson(usuario);
 		response.getWriter().append("[{\"status\":\"Atualizado ok\",\"timestemp\":\"" + new Date() + "\"}, ")
 				.append(json).append("]");
 
@@ -196,16 +179,17 @@ public class AlunosApi extends HttpServlet {
 		response.setContentType("application/json");// Mime type
 
 		Gson gson = new Gson();
-		AlunosDao dao = new AlunosDao();
-		Alunos aluno = new Alunos();
-		aluno.setId_aluno(request.getParameter("id_aluno"));
+		UsuariosDao dao = new UsuariosDao();
+		Usuarios usuario = new Usuarios();
+		usuario.setId_usuario((request.getParameter("id_usuario")));
 
 		try {
-			dao.delete(aluno);
-			System.out.println("Aluno excluido com sucesso!! " + aluno.getId_aluno() + " " + aluno.getNome());
+			dao.delete(usuario);
+			System.out.println("Usuario excluido com sucesso!! " 
+					+ usuario.getId_usuario() + " " + usuario.getEmail());
 
 			response.getWriter().append("[{\"status\":\"Deletado ok\",\"timestemp\":\"" + new Date() + "\"}, ")
-					.append(gson.toJson(aluno.getId_aluno())).append("]");
+					.append(gson.toJson(usuario.getId_usuario())).append("]");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

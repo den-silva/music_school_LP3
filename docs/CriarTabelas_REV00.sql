@@ -51,13 +51,16 @@ CREATE TABLE IF NOT EXISTS tb_professores (
 -- SELECT * FROM tb_professores;
 
 -- DROP TABLE tb_professores_cursos;
+--Nao vai ter tb_professores_cursos
 
+/*
 CREATE TABLE IF NOT EXISTS tb_professores_cursos(
 	id_professor INT UNSIGNED,
     id_curso INT UNSIGNED,    
     CONSTRAINT fk_professor1 FOREIGN KEY (id_professor) REFERENCES tb_professores(id_professor),
     CONSTRAINT fk_curso1 FOREIGN KEY (id_curso) REFERENCES tb_cursos(id_curso)
 ) ENGINE=InnoDB;
+*/
 
 -- SELECT * FROM tb_professores_cursos;
 
