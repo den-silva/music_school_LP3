@@ -1,0 +1,101 @@
+- Fazer um site de escola de música
+
+- Banco de Dados: Mysql (verificar se conseguimos na nuvem)
+
+- API Pública: Procura de endereço por CEP
+
+- Tabelas: Aluno, Curso, Professor
+
+Tabela Usuário
+- IdUsuario (tipo: inteiro auto incremento)
+- Email (varchar 100)
+- Senha(varchar 10)
+
+
+Tabela Aluno
+- IdAluno (tipo: inteiro auto incremento)
+- Nome (varchar 150)
+- Endereço [RUA | COMPLEMENTO | NUM |BAIRRO | CIDADE | UF ] (varchar 250)
+- Email (varchar 100)
+- senha (varchar 10)
+
+Tabela Matricula
+- id_matricula
+- IdAluno (inteiro)
+- IdCurso (inteiro) ---> ver para substituir pelo id da turma
+
+Tabela Curso
+- IdCurso [1] (tipo: inteiro auto incremento)
+- Nome [Guitarra] (varchar 50)
+
+
+Tabela Professor
+- IdProfessor (tipo: inteiro auto incremento)
+- Nome (varchar 150)
+- Endereço [RUA | COMPLEMENTO | NUM |BAIRRO | CIDADE | UF ] (varchar 250)
+- Email (varchar 100)
+- senha (varchar 10)
+
+Tabela ProfessorCurso ----->> (Não vai usar)
+- IdProfessor (inteiro) 
+- IdCurso (inteiro)
+
+
+Tabela Turma
+- IdTurma (Id) (tipo: inteiro auto incremento)
+- Nível [BASICO | INTERMEDIARIO | AVANCADO]
+- IdCurso (Id) (inteiro)
+- IdProfessor(Id) (inteiro)
+
+--> Ver para colocar Turma_Aluno
+
+----------------------------------- OPCIONAL --------------------------------------
+
+--> stringHorario= Segunda - 13 as 15 | Quarta - 13 as 15
+
+Tabela Horario
+- IdHorario (inteiro) [1315]
+- Hora [13h às 15h] (varchar 20) 
+
+
+
+Tabela Dia da Semana
+- IdDiaSemana [1] [2] [3] [4]
+- Dia [Domingo] [Segunda] [Terça] [Quarta]
+
+Tabela Horário-Dia-Turma
+- IdHorario (id)
+- IdDiaSemana (Id)
+- IdTurma (Id)
+
+
+--------------------------  TELA  ------------------------------------------------------
+
+- Tela Home [Botões de Login de Aluno, Professor e Administrador]
+
+- Tela de Login [ Front-end iguais ou mudando somente  a cor para cada tipo de usuário]
+
+Ao fazer o login o menu da tela home será alterado, personalizado para cada tipo de usuário [BOTÕES: PROFESSOR, ALUNO , CURSO , TURMA]
+
+FORMS: PARA CADA FORMS QUANDO ENTRAR NA TELA VAI APRESENTAR A LISTA DO QUE TEM CADASTRADO NO BANCO (método findall)
+
+- Tela Menu Professor [BOTÕES: EXCLUIR, INCLUIR, ALTERAR --> Na frente de cada um dos itens]
+	- Tela Incluir quando apertar botão
+	- Tela Alterar quando apertar botão
+
+- Tela Menu Curso [BOTÕES: EXCLUIR, INCLUIR, ALTERAR --> Na frente de cada um dos itens]
+	- Tela Incluir quando apertar botão
+	- Tela Alterar quando apertar botão
+
+- Tela Menu Turma [BOTÕES: EXCLUIR, INCLUIR, ALTERAR --> Na frente de cada um dos itens]
+	- Tela Incluir quando apertar botão
+	- Tela Alterar quando apertar botão
+
+- Realizar Matricula [EXCLUIR, INCLUIR, ALTERAR]
+ - Terá um campo para verificar se o aluno existe pelo e-mail
+  Verificar se é aluno novo: Sim --> Aparece Form: Cadastrar Aluno [EXCLUIR, INCLUIR, ALTERAR] e realiza a Matricula [Form Matricula]
+			     Não --> realiza a Matricula [Form Matricula]
+
+
+
+

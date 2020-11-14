@@ -34,18 +34,6 @@ CREATE TABLE IF NOT EXISTS tb_cursos (
 
 -- SELECT * FROM tb_cursos;
 
--- DROP TABLE tb_matriculas;
-
-CREATE TABLE IF NOT EXISTS tb_matriculas (
-	id_matricula INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	id_aluno INT UNSIGNED,
-	id_turma INT UNSIGNED,
-	mat_status varchar(20), -- [ativa | inativa] add 12/11/2020
-	CONSTRAINT fk_aluno FOREIGN KEY (id_aluno) REFERENCES tb_alunos(id_aluno),
-    CONSTRAINT fk_turma FOREIGN KEY (id_turma) REFERENCES tb_turmas(id_turma)
-) ENGINE=InnoDB;
-
--- SELECT * FROM tb_matriculas;
     
 CREATE TABLE IF NOT EXISTS tb_professores (
     id_professor INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -63,6 +51,19 @@ CREATE TABLE IF NOT EXISTS tb_turmas (
     CONSTRAINT fk_professor2 FOREIGN KEY (id_professor) REFERENCES tb_professores(id_professor),
     CONSTRAINT fk_curso2 FOREIGN KEY (id_curso) REFERENCES tb_cursos(id_curso)
 ) ENGINE=InnoDB;
+
+-- DROP TABLE tb_matriculas;
+
+CREATE TABLE IF NOT EXISTS tb_matriculas (
+	id_matricula INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id_aluno INT UNSIGNED,
+	id_turma INT UNSIGNED,
+	mat_status varchar(20), -- [ativa | inativa] add 12/11/2020
+	CONSTRAINT fk_aluno FOREIGN KEY (id_aluno) REFERENCES tb_alunos(id_aluno),
+    CONSTRAINT fk_turma FOREIGN KEY (id_turma) REFERENCES tb_turmas(id_turma)
+) ENGINE=InnoDB;
+
+-- SELECT * FROM tb_matriculas;
     
 -- SELECT * FROM tb_professores;
 
