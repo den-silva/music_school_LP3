@@ -24,12 +24,13 @@ public class TurmasDao implements IcrudPadrao<Turmas> {
 		// TODO Auto-generated method stub
 
 		System.out.println("Inicio turmas INSERT");
-		String query = "INSERT INTO tb_turmas " + "(id_curso, id_professor, nivel) VALUES (?, ?, ?)";
+		String query = "INSERT INTO tb_turmas " + "(id_curso, id_professor, horario) VALUES (?, ?, ?)";
 
 		try (PreparedStatement ps = con.prepareStatement(query)) {
 			ps.setInt(1, entidade.getId_curso());
 			ps.setInt(2, entidade.getId_professor());
-			ps.setString(3, entidade.getNivel().getNivelCurso());
+			ps.setString(3, MetodosGerais
+					.listaHorariosParaString(entidade.getHorarios()));
 			ps.executeUpdate();
 
 			System.out.println("Final turmas INSERT");
@@ -45,12 +46,13 @@ public class TurmasDao implements IcrudPadrao<Turmas> {
 	public void update(Turmas entidade) throws SQLException {
 		// TODO Auto-generated method stub
 		System.out.println("Inicio turmas UPDATE");
-		String query = "UPDATE tb_turmas SET " + "id_curso = ?, id_professor = ?, nivel = ? " + "WHERE id_turma = ?";
+		String query = "UPDATE tb_turmas SET " + "id_curso = ?, id_professor = ?, horario = ? " + "WHERE id_turma = ?";
 
 		try (PreparedStatement ps = con.prepareStatement(query)) {
 			ps.setInt(1, entidade.getId_curso());
 			ps.setInt(2, entidade.getId_professor());
-			ps.setString(3, entidade.getNivel().getNivelCurso());
+			ps.setString(3, MetodosGerais
+					.listaHorariosParaString(entidade.getHorarios()));
 			ps.setInt(4, entidade.getId_turma());
 
 			ps.executeUpdate();
@@ -89,7 +91,8 @@ public class TurmasDao implements IcrudPadrao<Turmas> {
 		// TODO Auto-generated method stub
 		System.out.println("Inicio turmas FIND_FOR_ID");
 		// String query = "SELECT * FROM tb_turmas where id_turma = ?";
-		String query = "SELECT t.*, c.nome as nome_curso , p.nome as nome_professor " + "FROM tb_turmas t "
+		String query = "SELECT t.*, c.nome as nome_curso , p.nome as nome_professor " 
+				+ "FROM tb_turmas t "
 				+ "inner join tb_cursos c on c.id_curso=t.id_curso "
 				+ "inner join tb_professores p on p.id_professor=t.id_professor where id_turma = ?";
 		Turmas turma = new Turmas();
@@ -104,9 +107,9 @@ public class TurmasDao implements IcrudPadrao<Turmas> {
 					turma.setId_professor(rs.getInt("id_professor"));
 					turma.setNome_professor(rs.getString("nome_professor"));
 
-					String nivel = rs.getString("nivel");
-					
-					turma.setNivel(MetodosGerais.stringParaEnumNivel(nivel));
+					String horarios = rs.getString("horario");
+
+					turma.setHorarios(MetodosGerais.stringParaListaHorarios(horarios));
 
 //					if (nivel.equals(EnumNivelCurso.BASICO.getNivelCurso()) ) {
 //						turma.setNivel(EnumNivelCurso.BASICO);
@@ -151,9 +154,9 @@ public class TurmasDao implements IcrudPadrao<Turmas> {
 					turma.setId_professor(rs.getInt("id_professor"));
 					turma.setNome_professor(rs.getString("nome_professor"));
 
-					String nivel = rs.getString("nivel");
-					
-					turma.setNivel(MetodosGerais.stringParaEnumNivel(nivel));
+					String horarios = rs.getString("horario");
+
+					turma.setHorarios(MetodosGerais.stringParaListaHorarios(horarios));
 
 //					if (nivel == EnumNivelCurso.BASICO.getNivelCurso()) {
 //						turma.setNivel(EnumNivelCurso.BASICO);

@@ -13,17 +13,20 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="_js/cep.js"></script>
+<script src="_js/MetodosAlunos.js"></script>
 
 
 </head>
 <body>
 	<form method="post" action="/music_school_LP3/AlunosApi">
-		<fieldset>
-			<legend>User info:</legend>
+		<fieldset onchange="proximoId()">
+			<legend>Novo Aluno:</legend>
+			<input type="hidden" id="nomeApi" value=AlunosApi>
+			<input type="hidden" id="idApi" value=id_aluno>
 
 			<p>
 				<label>ID </label><br> <input type="number" id="id_aluno"
-					name="id_aluno" size="2" required>
+					name="id_aluno" size="2" required disabled="disabled">
 			</p>
 			<p>
 				<label>Nome </label><br> <input type="text" id="nome"

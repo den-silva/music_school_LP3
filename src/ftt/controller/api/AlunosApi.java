@@ -68,8 +68,17 @@ public class AlunosApi extends HttpServlet {
 			int idReq = Integer.valueOf(request.getParameter("id_aluno"));
 
 			try {
-				Alunos aluno = dao.findForId(idReq);
-				response.getWriter().append(gson.toJson(aluno));
+
+				if (idReq == -10) {
+					String proximoId=dao.proximoId()+"}";
+					response.getWriter().append('{').append('"')
+					.append("proximo").append('"').append(": ").append(proximoId);
+
+				} else {
+					Alunos aluno = dao.findForId(idReq);
+					response.getWriter().append(gson.toJson(aluno));
+				}
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -77,7 +86,7 @@ public class AlunosApi extends HttpServlet {
 
 		} else {
 			try {
-				ArrayList<Alunos> listaAlunos = dao.findAll();			
+				ArrayList<Alunos> listaAlunos = dao.findAll();
 
 				response.getWriter().append(gson.toJson(listaAlunos));
 			} catch (SQLException e) {

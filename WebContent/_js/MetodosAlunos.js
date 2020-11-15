@@ -105,8 +105,7 @@ function preencheAlunosParaAlterar() {
 	document.querySelector('#email').value = '';
 	document.querySelector('#senha').value = '';
 
-	var id_aluno = document.querySelector('#id_aluno').value;
-	var form = document.querySelector('#update-form');
+	var id_aluno = document.querySelector('#id_aluno').value;	
 	var url =
 		`http://localhost:8080/music_school_LP3/AlunosApi?id_aluno=${id_aluno}`;
 
@@ -140,6 +139,38 @@ function preencheAlunosParaAlterar() {
 				document.querySelector('#senha').value = meuJson.senha;
 			}
 
+		});
+
+}
+
+function proximoId() {	
+
+	var nomeApi = document.getElementById('nomeApi').value;
+	var idApi = document.getElementById('idApi').value;
+	
+	var url =
+		`http://localhost:8080/music_school_LP3/${nomeApi}?${idApi}=-10`;
+
+
+	var myInit = {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json;',
+		},
+		mode: 'cors',
+		// cache: 'default'
+	};
+
+	fetch(url, myInit)
+		.then(function(response) {
+			console.log(response);
+			return response.json();
+		})
+		.then(function(meuJson) {
+			if (meuJson.nome != null) {
+				console.log(meuJson);
+				document.getElementById(`${idApi}`).innerText = meuJson.proximo;				
+			}
 		});
 
 }
