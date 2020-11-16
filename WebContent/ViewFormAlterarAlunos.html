@@ -14,14 +14,14 @@
 <script src="_js/cep.js"></script>
 <script src="_js/MetodosAlunos.js"></script>
 </head>
-<body>
+<body onload="preencheAlunosParaAlterar();" >
 	<form id="update-form">
 		<fieldset>
 			<legend>Alteração de Alunos</legend>			
 
 			<p>
 				<label>ID </label><br> <input type="number" id="id_aluno"
-					onchange="preencheAlunosParaAlterar();" name="id_aluno" min="0" size="2" required>
+					onchange="preencheAlunosParaAlterar();" name="id_aluno" min="0" size="2" required readonly="readonly">
 			</p>
 
 			<p>
@@ -74,7 +74,7 @@
 					name="senha" required>
 			</p>
 			<input type="submit" onclick="alunosPutParams()" >
-
+				
 <!-- 			<input type="submit" onclick="alunosPutParams();"> -->
 		</fieldset>
 	</form>
