@@ -105,7 +105,10 @@ function preencheAlunosParaAlterar() {
 	document.querySelector('#email').value = '';
 	document.querySelector('#senha').value = '';
 
-	var id_aluno = document.querySelector('#id_aluno').value;	
+	//var id_aluno = document.querySelector('#id_aluno').value;
+	var id_aluno = recebeId();
+	console.log(id_aluno);
+	var form = document.querySelector('#update-form');
 	var url =
 		`http://localhost:8080/music_school_LP3/AlunosApi?id_aluno=${id_aluno}`;
 
@@ -127,6 +130,7 @@ function preencheAlunosParaAlterar() {
 		.then(function(meuJson) {
 			if (meuJson.nome != null) {
 				console.log(meuJson);
+				document.querySelector('#id_aluno').value = meuJson.id_aluno;
 				document.querySelector('#nome').value = meuJson.nome;
 				console.log(meuJson.nome);
 				document.querySelector('#rua').value = meuJson.endereco.rua;
@@ -143,14 +147,12 @@ function preencheAlunosParaAlterar() {
 
 }
 
-function proximoId() {	
+function getAlunos() {
 
-	var nomeApi = document.getElementById('nomeApi').value;
-	var idApi = document.getElementById('idApi').value;
-	
-	var url =
-		`http://localhost:8080/music_school_LP3/${nomeApi}?${idApi}=0`;
-
+	var url = 'http://localhost:8080/music_school_LP3/AlunosApi';
+	var body = document.body;
+	var tabela = document.getElementById("myTable");
+	body.appendChild(tabela);
 
 	var myInit = {
 		method: 'GET',
@@ -163,14 +165,118 @@ function proximoId() {
 
 	fetch(url, myInit)
 		.then(function(response) {
-			console.log(response);
+			//console.log(response);
 			return response.json();
 		})
-		.then(function(meuJson) {			
-				console.log(meuJson.proximo);
-				document.getElementById(idApi).value = meuJson.proximo;				
-			
+		.then(function(meuJson) {
+			if (meuJson != null) {
+				console.log(meuJson);
+				setTabelaHead(tabela);
+				//setTabelaHead(tabela,meuJson);
+				geraTabela(tabela, meuJson);
+				
+			}
+
 		});
 
 }
+
+function setTabelaHead(tabela) {
+	//let dados = msg.nome;
+	//let data = Object.keys(msg[0]);
+	let dados = (['Id_Aluno', 'Nome', 'Email', 'Ações']);
+
+	//let thead = tabela.createTHead();
+	var row = tabela.insertRow();
+
+
+	for (let key of dados) {
+
+		let th = document.createElement('th');
+		let text = document.createTextNode(key);
+		th.appendChild(text);
+		row.appendChild(th);
+		
+
+		
+	}
+
+}
+
+function geraTabela(tabela, msg) {
+
+	console.log();
+	//let dados = msg.nome;
+	for (let element of msg) {
+		let row = tabela.insertRow();
+		for (key in element) {
+			if (key != 'endereco' && key != 'senha') {
+				let cell = row.insertCell();
+				let text = document.createTextNode(element[key]);
+				cell.appendChild(text);
+			}
+
+		}
+		let id = element.id_aluno;
+		console.log(id);
+
+		let cell = row.insertCell();
+
+		let btAlterar = document.createElement("button");
+		let a = document.createElement("a");
+		var texto = document.createTextNode("Alterar");
+		a.appendChild(texto);
+		a.classList="btn btn-warning";
+		a.href = "ViewFormAlterarAlunos.html";
+		btAlterar.appendChild(a);		
+		cell.appendChild(a);
+		
+		
+		cell.innerHTML += ' ';
+
+
+		let btExcluir = document.createElement("button");
+		let e = document.createElement("a");
+		var texto = document.createTextNode("Excluir");
+		e.appendChild(texto);
+		e.classList="btn btn-danger";
+		//e.href = apagaId(1);
+		btExcluir.appendChild(e);
+		cell.appendChild(e);
+		
+		cell.innerHTML += ' ';
+
+		let btMatricular = document.createElement("button");
+		let m = document.createElement("a");
+		var texto = document.createTextNode("Matricular");
+		m.appendChild(texto);
+		m.classList="btn btn-success";
+		m.href = "ViewFormAlterarAlunos.html";
+		btMatricular.appendChild(m);
+		btMatricular.click("getFormAlterar()");
+		cell.appendChild(m);
+	}
+}
+
+function getFormAlterar() {
+	//location.assign('ViewFormAlterarAlunos.html');
+	console.log('Alterar');
+	
+}
+
+function passaId() {
+	sessionStorage.setItem('id_aluno',1);
+}
+
+function recebeId(){
+	return sessionStorage.getItem('id_aluno');
+}
+
+function apagaId(id){
+	 if (confirm('Tem certeza que deseja excluir esse Aluno?')){
+		console.log(id + " deletado");
+	}
+		          
+
+    }
 
