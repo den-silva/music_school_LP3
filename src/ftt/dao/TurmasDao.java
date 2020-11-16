@@ -29,8 +29,7 @@ public class TurmasDao implements IcrudPadrao<Turmas> {
 		try (PreparedStatement ps = con.prepareStatement(query)) {
 			ps.setInt(1, entidade.getId_curso());
 			ps.setInt(2, entidade.getId_professor());
-			ps.setString(3, MetodosGerais
-					.listaHorariosParaString(entidade.getHorarios()));
+			ps.setString(3, MetodosGerais.listaHorariosParaString(entidade.getHorarios()));
 			ps.executeUpdate();
 
 			System.out.println("Final turmas INSERT");
@@ -51,8 +50,7 @@ public class TurmasDao implements IcrudPadrao<Turmas> {
 		try (PreparedStatement ps = con.prepareStatement(query)) {
 			ps.setInt(1, entidade.getId_curso());
 			ps.setInt(2, entidade.getId_professor());
-			ps.setString(3, MetodosGerais
-					.listaHorariosParaString(entidade.getHorarios()));
+			ps.setString(3, MetodosGerais.listaHorariosParaString(entidade.getHorarios()));
 			ps.setInt(4, entidade.getId_turma());
 
 			ps.executeUpdate();
@@ -91,8 +89,7 @@ public class TurmasDao implements IcrudPadrao<Turmas> {
 		// TODO Auto-generated method stub
 		System.out.println("Inicio turmas FIND_FOR_ID");
 		// String query = "SELECT * FROM tb_turmas where id_turma = ?";
-		String query = "SELECT t.*, c.nome as nome_curso , p.nome as nome_professor " 
-				+ "FROM tb_turmas t "
+		String query = "SELECT t.*, c.nome as nome_curso , p.nome as nome_professor " + "FROM tb_turmas t "
 				+ "inner join tb_cursos c on c.id_curso=t.id_curso "
 				+ "inner join tb_professores p on p.id_professor=t.id_professor where id_turma = ?";
 		Turmas turma = new Turmas();
@@ -188,7 +185,9 @@ public class TurmasDao implements IcrudPadrao<Turmas> {
 		try (PreparedStatement params = con.prepareStatement(comandoSql)) {
 			try (ResultSet dados = params.executeQuery()) {
 				if (dados.next()) {
-					proximo = dados.getInt("proximo");
+					if (dados.getInt("proximo") != 0) {
+						proximo = dados.getInt("proximo");
+					}
 				}
 			}
 		} catch (SQLException e) {

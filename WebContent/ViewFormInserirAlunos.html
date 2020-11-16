@@ -13,29 +13,30 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="_js/cep.js"></script>
-<script src="_js/MetodosAlunos.js"></script>
+<script type="text/javascript" src="_js/MetodosAlunos.js"></script>
 
 
 </head>
-<body>
-	<form method="post" action="/music_school_LP3/AlunosApi">
-		<fieldset onchange="proximoId()">
+<body onload="proximoId();">
+	<input type="hidden" id="nomeApi" value="AlunosApi">
+	<input type="hidden" id="idApi" value="id_aluno">
+	<form  method="post"
+		action="/music_school_LP3/AlunosApi">
+		<fieldset>
 			<legend>Novo Aluno:</legend>
-			<input type="hidden" id="nomeApi" value=AlunosApi>
-			<input type="hidden" id="idApi" value=id_aluno>
 
 			<p>
-				<label>ID </label><br> <input type="number" id="id_aluno"
-					name="id_aluno" size="2" required disabled="disabled">
+				<label>ID </label><br> 
+				<input type="number" id="id_aluno"
+					name="id_aluno" size="2" required readonly="readonly">
 			</p>
 			<p>
 				<label>Nome </label><br> <input type="text" id="nome"
 					name="nome" size="40" required>
 			</p>
-			<div >
-				<label>CEP </label><br> 
-				<input onblur="apiCep()" type="text" id="cep" name="cep"
-					pattern="\d{5}-?\d{3}" required
+			<div>
+				<label>CEP </label><br> <input onblur="apiCep()" type="text"
+					id="cep" name="cep" pattern="\d{5}-?\d{3}" required
 					onkeypress="$(this).mask('00000-000')" placeholder="Ex.: 00000-000">
 			</div>
 
@@ -64,18 +65,18 @@
 						required>
 				</div>
 				<div>
-					<label>Complemento </label> <br>
-					<input type="text" id="complemento" name="complemento" required>
+					<label>Complemento </label> <br> <input type="text"
+						id="complemento" name="complemento" required>
 				</div>
 			</div>
 
 			<p>
-				<label>E-Mail </label><br>
-				<input type="email" id="email" name="email" required>
+				<label>E-Mail </label><br> <input type="email" id="email"
+					name="email" required>
 			</p>
 			<p>
-				<label>Senha </label><br>
-				<input type="password" id="senha" name="senha" required>
+				<label>Senha </label><br> <input type="password" id="senha"
+					name="senha" required>
 			</p>
 
 

@@ -149,7 +149,7 @@ function proximoId() {
 	var idApi = document.getElementById('idApi').value;
 	
 	var url =
-		`http://localhost:8080/music_school_LP3/${nomeApi}?${idApi}=-10`;
+		`http://localhost:8080/music_school_LP3/${nomeApi}?${idApi}=0`;
 
 
 	var myInit = {
@@ -166,11 +166,10 @@ function proximoId() {
 			console.log(response);
 			return response.json();
 		})
-		.then(function(meuJson) {
-			if (meuJson.nome != null) {
-				console.log(meuJson);
-				document.getElementById(`${idApi}`).innerText = meuJson.proximo;				
-			}
+		.then(function(meuJson) {			
+				console.log(meuJson.proximo);
+				document.getElementById(idApi).value = meuJson.proximo;				
+			
 		});
 
 }

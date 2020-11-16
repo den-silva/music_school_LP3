@@ -63,16 +63,20 @@ public class AlunosApi extends HttpServlet {
 
 		Gson gson = new Gson();
 		AlunosDao dao = new AlunosDao();
+		String recebeId = request.getParameter("id_aluno");
+		System.out.println("ta vazio: " + recebeId);
 
-		if (request.getParameter("id_aluno") != null) {
+		// if (request.getParameter("id_aluno") != null) {
+		if (request.getParameter("id_aluno") != null  ) {
 			int idReq = Integer.valueOf(request.getParameter("id_aluno"));
 
 			try {
 
-				if (idReq == -10) {
-					String proximoId=dao.proximoId()+"}";
-					response.getWriter().append('{').append('"')
-					.append("proximo").append('"').append(": ").append(proximoId);
+				if (idReq == 0) {
+					System.out.println(dao.proximoId());
+					String proximoId = dao.proximoId() + "}";
+					response.getWriter().append('{').append('"').append("proximo").append('"').append(": ")
+							.append(proximoId);
 
 				} else {
 					Alunos aluno = dao.findForId(idReq);
