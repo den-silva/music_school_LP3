@@ -1,10 +1,14 @@
 package ftt.model;
 
+import ftt.enums.EnumNivelCurso;
+import ftt.enums.EnumPeriodo;
+
 public class Cursos {
 	
 	private int id_curso;
 	private String nome;
-	
+	private EnumNivelCurso nivel;
+	private EnumPeriodo periodo;	
 	
 	public Cursos () {
 		
@@ -32,6 +36,22 @@ public class Cursos {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public EnumNivelCurso getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(EnumNivelCurso nivel) {
+		this.nivel = nivel;
+	}
+
+	public EnumPeriodo getPeriodo() {
+		return periodo;
+	}
+
+	public void setPeriodo(EnumPeriodo periodo) {
+		this.periodo = periodo;
 	}
 
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,9 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import ftt.dao.CursosDao;
-import ftt.dao.ProfessoresDao;
 import ftt.model.Cursos;
-import ftt.model.Professores;
+import ftt.model.MetodosGerais;
 
 /**
  * Servlet implementation class ProfessoresApi
@@ -113,7 +113,11 @@ public class CursosApi extends HttpServlet {
 		CursosDao dao = new CursosDao();
 		Gson gson = new Gson();
 		
-		c.setNome(request.getParameter("nome"));
+		c.setNome(request.getParameter("nome"));		
+		c.setNivel(MetodosGerais
+				.stringParaEnumNivel(request.getParameter("nivel")));
+		c.setPeriodo(MetodosGerais
+				.stringParaPeriodo(request.getParameter("periodo")));
 		
 		
 		try {
@@ -146,6 +150,10 @@ public class CursosApi extends HttpServlet {
 		
 		c.setId_curso(request.getParameter("id_curso"));
 		c.setNome(request.getParameter("nome"));
+		c.setNivel(MetodosGerais
+				.stringParaEnumNivel(request.getParameter("nivel")));
+		c.setPeriodo(MetodosGerais
+				.stringParaPeriodo(request.getParameter("periodo")));
 
 		
 		try {

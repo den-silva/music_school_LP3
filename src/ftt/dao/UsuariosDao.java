@@ -117,7 +117,7 @@ public class UsuariosDao implements IcrudPadrao<Usuarios> {
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 					Usuarios usuario = new Usuarios();
-					usuario.setId_usuario(rs.getInt("id_usuario"));					
+					usuario.setId_usuario(rs.getInt("id_usuario"));
 					usuario.setEmail(rs.getString("email"));
 					usuario.setSenha(rs.getString("senha"));
 					listaUsuarios.add(usuario);
@@ -143,7 +143,9 @@ public class UsuariosDao implements IcrudPadrao<Usuarios> {
 		try (PreparedStatement params = con.prepareStatement(comandoSql)) {
 			try (ResultSet dados = params.executeQuery()) {
 				if (dados.next()) {
-					proximo = dados.getInt("proximo");
+					if (dados.getInt("proximo") != 0) {
+						proximo = dados.getInt("proximo");
+					}
 				}
 			}
 		} catch (SQLException e) {

@@ -1,6 +1,6 @@
 package ftt.model;
 
-import ftt.enums.EnumNivelCurso;
+import java.util.List;
 
 public class Turmas {
 	private int id_turma;
@@ -8,7 +8,8 @@ public class Turmas {
 	private String nome_curso;
 	private int id_professor;
 	private String nome_professor;
-	private EnumNivelCurso nivel;
+	private List<Horario> horarios;
+	
 
 	public Turmas() {
 
@@ -63,15 +64,15 @@ public class Turmas {
 	public void setId_professor(int id_professor) {
 		this.id_professor = id_professor;
 	}
-	
+
 	// Metodo setId_professor sobrescrito para receber String
-		public void setId_professor(String id_professor) {
-			if (id_professor == null || id_professor.isEmpty()) {
-				this.id_professor = 0;
-			} else {
-				this.id_professor = Integer.valueOf(id_professor);
-			}
+	public void setId_professor(String id_professor) {
+		if (id_professor == null || id_professor.isEmpty()) {
+			this.id_professor = 0;
+		} else {
+			this.id_professor = Integer.valueOf(id_professor);
 		}
+	}
 
 	public String getNome_professor() {
 		return nome_professor;
@@ -81,12 +82,14 @@ public class Turmas {
 		this.nome_professor = nome_professor;
 	}
 
-	public EnumNivelCurso getNivel() {
-		return nivel;
+	public List<Horario> getHorarios() {
+		return horarios;
 	}
 
-	public void setNivel(EnumNivelCurso nivel) {
-		this.nivel = nivel;
+	public void setHorarios(List<Horario> horarios) {
+		this.horarios = horarios;
 	}
+
+	
 
 }

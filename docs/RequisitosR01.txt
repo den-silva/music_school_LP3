@@ -20,8 +20,9 @@ Tabela Aluno
 - senha (varchar 10)
 
 Tabela Matricula
+- id_matricula
 - IdAluno (inteiro)
-- IdCurso (inteiro)
+- IdCurso (inteiro) ---> ver para substituir pelo id da turma
 
 Tabela Curso
 - IdCurso [1] (tipo: inteiro auto incremento)
@@ -35,7 +36,7 @@ Tabela Professor
 - Email (varchar 100)
 - senha (varchar 10)
 
-Tabela ProfessorCurso
+Tabela ProfessorCurso ----->> (Não vai usar)
 - IdProfessor (inteiro) 
 - IdCurso (inteiro)
 
@@ -46,7 +47,11 @@ Tabela Turma
 - IdCurso (Id) (inteiro)
 - IdProfessor(Id) (inteiro)
 
+--> Ver para colocar Turma_Aluno
+
 ----------------------------------- OPCIONAL --------------------------------------
+
+--> stringHorario= Segunda - 13 as 15 | Quarta - 13 as 15
 
 Tabela Horario
 - IdHorario (inteiro) [1315]
@@ -62,6 +67,7 @@ Tabela Horário-Dia-Turma
 - IdHorario (id)
 - IdDiaSemana (Id)
 - IdTurma (Id)
+
 
 --------------------------  TELA  ------------------------------------------------------
 
