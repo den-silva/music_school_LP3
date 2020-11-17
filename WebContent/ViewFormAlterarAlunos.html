@@ -13,8 +13,15 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="_js/cep.js"></script>
 <script src="_js/MetodosAlunos.js"></script>
+
+<link rel="stylesheet" href="../_css/style.css">
+<link rel="stylesheet" href="../_css/bootstrap.css">
+<link rel="stylesheet" href="../_css/bootstrap-minty-bootswatch.css">
+
 </head>
 <body onload = "preencheAlunosParaAlterar();">
+	<input type="hidden" id="nomeApi" value="AlunosApi">
+	<input type="hidden" id="idApi" value="id_aluno">
 	<form id="update-form">
 		<fieldset>
 			<legend>Alteração de Alunos</legend>
