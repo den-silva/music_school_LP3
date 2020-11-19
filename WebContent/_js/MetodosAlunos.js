@@ -1,3 +1,6 @@
+
+
+
 function alunosPut() {
 
 	//var form = new FormData(document.querySelector('#update-form'));
@@ -42,7 +45,9 @@ function alunosPut() {
 }
 
 function alunosPutParams() {
-
+	
+	//sessionStorage.setItem('operacao', 'A');
+	
 	//var form = new FormData(document.querySelector('#update-form'));
 	var form =
 	{
@@ -76,7 +81,8 @@ function alunosPutParams() {
 			'content-type': 'application/json; charset=UTF-8',
 		},
 		//params: JSON.stringify(form), // We send data in JSON format
-		mode: 'cors'
+		mode: 'cors',
+		redirect: 'follow'
 	}
 	var URL = 'http://localhost:8080/music_school_LP3/AlunosApi?' + params;
 
@@ -86,11 +92,15 @@ function alunosPutParams() {
 			return response;
 		})
 		.then(function(teste) {
-			console.log(teste)
+			console.log(teste);
+			window.location
+				.assign('http://localhost:8080/music_school_LP3/ViewIndexAlunos.html');
+
 		})
 		.catch((function(error) {
 			log('Falha na Requisição', error);
 		}));
+		
 }
 
 function preencheAlunosParaAlterar() {
@@ -147,11 +157,11 @@ function preencheAlunosParaAlterar() {
 
 }
 
-function deleteAlunos(id){
-	
+function deleteAlunos(id) {
+
 	var nomeApi = document.getElementById('nomeApi').value;
-	var idApi = document.getElementById('idApi').value;		
-	
+	var idApi = document.getElementById('idApi').value;
+
 	const putMethod = {
 		method: 'DELETE', // Method itself
 		/*headers: {
@@ -168,10 +178,10 @@ function deleteAlunos(id){
 			console.log(response);
 			alert(response.json());
 			return response;
-		})		
+		})
 		.catch((function(error) {
 			log('Falha na Requisição', error);
-		}));	
+		}));
 }
 
 function getAlunos() {
@@ -204,6 +214,11 @@ function getAlunos() {
 			}
 		});
 
+}
+
+function guardaAlunoParaMatricula(id, nome){
+	sessionStorage.setItem('id_aluno', id);
+	sessionStorage.setItem('nome_aluno', nome);
 }
 
 function setTabelaHead(tabela) {
@@ -274,16 +289,24 @@ function geraTabela(tabela, msg) {
 		cell.innerHTML += tagA2;
 
 		cell.innerHTML += ' ';
+		
+		var tagA3 = `<a href="ViewFormInserirMatriculas.html" 
+		class="btn btn-success"
+		onclick="guardaAlunoParaMatricula(${id}, ${element.nome_aluno})">Matricular ${id}</a>`;
+		cell.innerHTML += tagA3;
 
-		let btMatricular = document.createElement("button");
-		let m = document.createElement("a");
-		var texto = document.createTextNode("Matricular");
-		m.appendChild(texto);
-		m.classList = "btn btn-success";
-		m.href = "ViewFormAlterarAlunos.html";
-		btMatricular.appendChild(m);
-		btMatricular.click("getFormAlterar()");
-		cell.appendChild(m);
+		cell.innerHTML += ' ';
+
+//		let btMatricular = document.createElement("button");
+//		let m = document.createElement("a");
+//		var texto = document.createTextNode("Matricular");
+//		m.appendChild(texto);
+//		m.classList = "btn btn-success";
+//		m.href = "ViewFormInserirMatriculas.html";
+//		m.onclick=guardaAlunoParaMatricula(id, element.nome_aluno)
+//		btMatricular.appendChild(m);
+//		btMatricular.click("getFormAlterar()");
+//		cell.appendChild(m);
 	}
 }
 
@@ -308,11 +331,11 @@ function apagaId(id) {
 	}
 }
 
-function proximoId() {	
+function proximoId() {
 
 	var nomeApi = document.getElementById('nomeApi').value;
 	var idApi = document.getElementById('idApi').value;
-	
+
 	var url =
 		`http://localhost:8080/music_school_LP3/${nomeApi}?${idApi}=0`;
 
@@ -331,15 +354,15 @@ function proximoId() {
 			console.log(response);
 			return response.json();
 		})
-		.then(function(meuJson) {			
-				console.log(meuJson.proximo);
-				document.getElementById(idApi).value = meuJson.proximo;				
-			
+		.then(function(meuJson) {
+			console.log(meuJson.proximo);
+			document.getElementById(idApi).value = meuJson.proximo;
+
 		});
 
 }
 
-function redirecionar(pagina){
+function redirecionar(pagina) {
 	return location.href(pagina);
 }
 

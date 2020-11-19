@@ -15,6 +15,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 <script src="_js/cep.js"></script>
 <script src="_js/MetodosAlunos.js"></script>
+<script src="_js/MetodosMatriculas.js"></script>
 <link rel="stylesheet" href="_css/style.css">
 <link rel="stylesheet" href="_css/bootstrap.css">
 <link rel="stylesheet" href="_css/bootstrap-minty-bootswatch.css">
@@ -25,8 +26,10 @@
 	background-size: cover;
 	position: relative;
 	width: 100%;
-	height: 100%;
+	min-height: 820px;
+	height: 50%;
 }
+
 .card {
 	background-color: #FFFAF0;
 }
@@ -34,9 +37,9 @@
 
 
 </head>
-<body onload="proximoId();">
-	<input type="hidden" id="nomeApi" value="AlunosApi">
-	<input type="hidden" id="idApi" value="id_aluno">
+<body onload="getTurmas()">
+	<input type="hidden" id="nomeApi" value="MatriculasApi">
+	<input type="hidden" id="idApi" value="id_matricula">
 
 
 	<main class="fundo">
@@ -44,84 +47,43 @@
 		<div class="row">
 			<div class="card" style="width: 40rem;" id="login">
 				<div class="card-body">
-					<form method="post" action="/music_school_LP3/AlunosApi" >
+					<form method="post" action="/music_school_LP3/MatriculasApi">
 						<fieldset>
-							<legend>Novo Aluno:</legend>
+							<legend>Nova Matricula:</legend>
 
 							<div class="form-group">
-								<label>ID </label><br> <input type="number" id="id_aluno"
-									class="form-control" name="id_aluno" size="2" required
-									readonly="readonly">
+								<label>Id Aluno </label><br> <input type="number"
+									id="id_aluno" class="form-control" name="id_aluno" size="2"
+									required readonly="readonly">
 							</div>
 
 							<div class="form-group">
-
-								<label>Nome </label><br> <input type="text" id="nome"
-									class="form-control" name="nome" size="40" required>
+								<label>Nome do Aluno </label><br> <input type="text"
+									id="nome_aluno" readonly="readonly" class="form-control" name="nome_aluno"
+									size="40" required>
 							</div>
-
-
-							<div class="form-group">
-								<label>CEP </label><br> <input onblur="apiCep()"
-									type="text" class="form-control" id="cep" name="cep"
-									pattern="\d{5}-?\d{3}"
-									onkeypress="$(this).mask('00000-000')"
-									placeholder="Ex.: 00000-000">
+							<div class="">
+								<label>Lista de Turmas </label><br> <select id="turmas"
+									class="form-control" name="nome">
+									<option value="Selecionar">Selecionar</option>
+									<option value="Selecionar">Selecionar2</option>
+								</select>
 							</div>
+							<br> <br>
 
-							<div class="form-group">
-								<label>Rua </label><br> <input type="text" id="rua"
-									name="rua" class="form-control" required>
-							</div>
-							<div class="form-group">
-								<label>Número </label><br> <input type="number" id="numero"
-									class="form-control" name="numero" required>
-							</div>
-							<div class="form-group">
-								<label>Bairro </label><br> <input type="text" id="bairro"
-									class="form-control" name="bairro" required>
-							</div>
-
-
-							<div class="form-group">
-								<label>Cidade </label><br> <input type="text" id="cidade"
-									class="form-control" name="cidade" required>
-							</div>
-							<div class="form-group">
-								<label>UF </label><br> <input type="text" id="uf" name="uf"
-									class="form-control" required>
-							</div>
-							<div class="form-group">
-								<label>Complemento </label> <br> <input type="text"
-									class="form-control" id="complemento" name="complemento"
-									required>
-							</div>
-
-
-							<div class="form-group">
-
-								<label>E-Mail </label><br> <input type="email" id="email"
-									class="form-control" name="email" required>
-							</div>
-
-							<div class="form-group">
-								<label>Senha </label><br> <input type="password" id="senha"
-									class="form-control" name="senha" required>
-
-							</div>
-
-							<button onclick="redirecionar('ViewIndexAlunos.html')" type="submit" class="btn btn-outline-success">Inserir
+							<button type="submit" class="btn btn-outline-success">Matricular
 								Aluno</button>
 
 						</fieldset>
 
 					</form>
+					<br> <br>
 				</div>
 			</div>
 		</div>
 		<br> <br> <br>
 	</main>
-	
+
 	<footer class="mt-auto py-3">
 		<div id="contact-area">
 			<div class="container">
