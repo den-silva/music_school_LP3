@@ -147,6 +147,33 @@ function preencheAlunosParaAlterar() {
 
 }
 
+function deleteAlunos(id){
+	
+	var nomeApi = document.getElementById('nomeApi').value;
+	var idApi = document.getElementById('idApi').value;		
+	
+	const putMethod = {
+		method: 'DELETE', // Method itself
+		/*headers: {
+			'content-type': 'application/json; charset=UTF-8',
+		},
+		//params: JSON.stringify(form), // We send data in JSON format
+		mode: 'cors' */
+	}
+	//var URL = 'http://localhost:8080/music_school_LP3/AlunosApi?id_aluno=' + id;
+	var URL = `http://localhost:8080/music_school_LP3/${nomeApi}?${idApi}=${id}`
+
+	fetch(URL, putMethod)
+		.then(function(response) {
+			console.log(response);
+			alert(response.json());
+			return response;
+		})		
+		.catch((function(error) {
+			log('Falha na Requisição', error);
+		}));	
+}
+
 function getAlunos() {
 
 	var url = 'http://localhost:8080/music_school_LP3/AlunosApi';
@@ -174,9 +201,7 @@ function getAlunos() {
 				setTabelaHead(tabela);
 				//setTabelaHead(tabela,meuJson);
 				geraTabela(tabela, meuJson);
-				
 			}
-
 		});
 
 }
@@ -189,16 +214,11 @@ function setTabelaHead(tabela) {
 	//let thead = tabela.createTHead();
 	var row = tabela.insertRow();
 
-
 	for (let key of dados) {
-
 		let th = document.createElement('th');
 		let text = document.createTextNode(key);
 		th.appendChild(text);
 		row.appendChild(th);
-		
-
-		
 	}
 
 }
@@ -222,35 +242,44 @@ function geraTabela(tabela, msg) {
 
 		let cell = row.insertCell();
 
-		let btAlterar = document.createElement("button");
-		let a = document.createElement("a");
-		var texto = document.createTextNode("Alterar");
-		a.appendChild(texto);
-		a.classList="btn btn-warning";
-		a.href = "ViewFormAlterarAlunos.html";
-		btAlterar.appendChild(a);		
-		cell.appendChild(a);
-		
-		
+		//let btAlterar = document.createElement("button");
+		//		let a = document.createElement("a");
+		//		var texto = document.createTextNode(`Alterar ${id}`);
+		//		a.appendChild(texto);		
+		//		a.onclick=`passaId(${id})`;
+		//		a.classList = "btn btn-warning";
+		//		a.href = "ViewFormAlterarAlunos.html";
+		//		cell.appendChild(a);
+		//btAlterar.appendChild(a);
+		var tagA = `<a href="ViewFormAlterarAlunos.html" 
+		class="btn btn-warning"
+		onclick="passaId(${id})">Alterar ${id}</a>`
+		cell.innerHTML += tagA;
+
+
 		cell.innerHTML += ' ';
 
 
-		let btExcluir = document.createElement("button");
-		let e = document.createElement("a");
-		var texto = document.createTextNode("Excluir");
-		e.appendChild(texto);
-		e.classList="btn btn-danger";
-		//e.href = apagaId(1);
-		btExcluir.appendChild(e);
-		cell.appendChild(e);
-		
+		//		let btExcluir = document.createElement("button");
+		//		let e = document.createElement("a");
+		//		var texto = document.createTextNode("Excluir");
+		//		e.appendChild(texto);
+		//		e.classList = "btn btn-danger";
+		//		//e.href = apagaId(1);
+		//		btExcluir.appendChild(e);
+		//		cell.appendChild(e);
+		var tagA2 = `<a href="" 
+		class="btn btn-danger"
+		onclick="apagaId(${id})">Excluir ${id}</a>`;
+		cell.innerHTML += tagA2;
+
 		cell.innerHTML += ' ';
 
 		let btMatricular = document.createElement("button");
 		let m = document.createElement("a");
 		var texto = document.createTextNode("Matricular");
 		m.appendChild(texto);
-		m.classList="btn btn-success";
+		m.classList = "btn btn-success";
 		m.href = "ViewFormAlterarAlunos.html";
 		btMatricular.appendChild(m);
 		btMatricular.click("getFormAlterar()");
@@ -261,22 +290,87 @@ function geraTabela(tabela, msg) {
 function getFormAlterar() {
 	//location.assign('ViewFormAlterarAlunos.html');
 	console.log('Alterar');
-	
+
 }
 
-function passaId() {
-	sessionStorage.setItem('id_aluno',1);
+function passaId(id) {
+	sessionStorage.setItem('id_aluno', id);
 }
 
-function recebeId(){
+function recebeId() {
 	return sessionStorage.getItem('id_aluno');
 }
 
-function apagaId(id){
-	 if (confirm('Tem certeza que deseja excluir esse Aluno?')){
+function apagaId(id) {
+	if (confirm(`Tem certeza que deseja excluir esse Aluno id: ${id}?`)) {
+		deleteAlunos(id);
 		console.log(id + " deletado");
 	}
-		          
+}
 
-    }
+function proximoId() {	
+
+	var nomeApi = document.getElementById('nomeApi').value;
+	var idApi = document.getElementById('idApi').value;
+	
+	var url =
+		`http://localhost:8080/music_school_LP3/${nomeApi}?${idApi}=0`;
+
+
+	var myInit = {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json;',
+		},
+		mode: 'cors',
+		// cache: 'default'
+	};
+
+	fetch(url, myInit)
+		.then(function(response) {
+			console.log(response);
+			return response.json();
+		})
+		.then(function(meuJson) {			
+				console.log(meuJson.proximo);
+				document.getElementById(idApi).value = meuJson.proximo;				
+			
+		});
+
+}
+
+function redirecionar(pagina){
+	return location.href(pagina);
+}
+
+
+/*
+function criaTabela() {
+            var dadosDiv = document.body
+            var linhas = ['linhaA', 'linhaB', 'linhaC', 'linhaD'];
+
+            var tableTag = document.getElementById('minha-tabela');
+            tableTag.innerHTML += `<th>Coluna1</th>
+                                    <th>Coluna2</th>
+                                    <th>Coluna3</th>
+                                    <th>Coluna4</th>
+                                    <th>Ações</th>`;
+
+            for (var n = 0; n < 4; n++) {
+                tableTag.innerHTML += `<tr>
+
+            <td>${linhas[0] + n}</td>
+            <td>${linhas[1] + n}</td>
+            <td>${linhas[2] + n}</td>
+            <td>${linhas[3] + n}</td>
+            <td>
+                <a href="./index2.html" onclick="passaId(${n+1})" >Ir para index2</a>
+                <button class="btn btn-warning" onclick="alert('ok')">Editar</button>
+                <button class="btn btn-danger" onclick="alerta()" >Apagar</a>
+            </td>
+        </tr>`
+            }
+        }
+
+ */
 
