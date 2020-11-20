@@ -256,6 +256,7 @@ function geraTabela(tabela, msg) {
 		console.log(id);
 
 		let cell = row.insertCell();
+		cell.setAttribute('style', 'text-align: center');
 
 		//let btAlterar = document.createElement("button");
 		//		let a = document.createElement("a");
@@ -268,7 +269,7 @@ function geraTabela(tabela, msg) {
 		//btAlterar.appendChild(a);
 		var tagA = `<a href="ViewFormAlterarAlunos.html" 
 		class="btn btn-warning"
-		onclick="passaId(${id})">Alterar ${id}</a>`
+		onclick="passaId(${id})">Alterar</a>`
 		cell.innerHTML += tagA;
 
 
@@ -285,14 +286,14 @@ function geraTabela(tabela, msg) {
 		//		cell.appendChild(e);
 		var tagA2 = `<a href="" 
 		class="btn btn-danger"
-		onclick="apagaId(${id})">Excluir ${id}</a>`;
+		onclick="apagaId(${id})">Excluir</a>`;
 		cell.innerHTML += tagA2;
 
 		cell.innerHTML += ' ';
 		
 		var tagA3 = `<a href="ViewFormInserirMatriculas.html" 
-		class="btn btn-success"
-		onclick="guardaAlunoParaMatricula(${id}, ${element.nome_aluno})">Matricular ${id}</a>`;
+		class="btn btn-success" readonly="readonly"
+		onclick="guardaAlunoParaMatricula(${id}, ${element.nome_aluno})">Matricular</a>`;
 		cell.innerHTML += tagA3;
 
 		cell.innerHTML += ' ';

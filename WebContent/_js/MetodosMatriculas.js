@@ -36,7 +36,7 @@ function getTurmas() {
 				console.log(meuJson);
 				meuJson.map((item) => {
 					for (let sub in item) {
-						console.log('item: ' + sub);
+						console.log('item: ' + item[sub]);
 						var turma = "";
 						turma += sub.nome_curso
 							+ sub.horarios;
@@ -49,5 +49,12 @@ function getTurmas() {
 
 function criaOption(turma) {
 	var opt = `<option value="${turma}">${turma}</option>`;
+}
+
+function escreveLogado(){
+	var logado = sessionStorage.getItem('logado');
+	console.log(logado);
+	return alert(`Bem vindo ${logado}`);
+	
 }
 
