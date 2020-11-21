@@ -1,3 +1,12 @@
+<%@page import="ftt.model.Horario"%>
+<%@page import="ftt.model.Cursos"%>
+<%@page import="ftt.dao.CursosDao"%>
+<%@page import="ftt.model.Turmas"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="ftt.dao.TurmasDao"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -40,7 +49,12 @@
 <body onload="getTurmas()">
 	<input type="hidden" id="nomeApi" value="MatriculasApi">
 	<input type="hidden" id="idApi" value="id_matricula">
-
+	<input type="hidden" id="id_turma" name="id_turma">
+	<% 
+		TurmasDao tDao=new TurmasDao();
+		List<Turmas> turmas=tDao.findAll();
+		
+	%>
 
 	<main class="fundo">
 		<br> <br> <br>
@@ -62,20 +76,39 @@
 									id="nome_aluno" readonly="readonly" class="form-control"
 									name="nome_aluno" size="40" required>
 							</div>
-							<div class="">
+							<div class="" onchange="pegaSelecionadoNoCombo()" >
 								<label>Lista de Turmas </label><br> <select id="turmas"
 									class="form-control" name="nome">
-									<option value="Selecionar">Selecionar</option>
-									<option value="Selecionar">Selecionar2</option>
+									<%
+									for(Turmas t : turmas){
+									String str="";
+									String horas="";
+									for(Horario h:t.getHorarios()){
+										horas+=" >"+h.getDiaSemana()+" - "+h.getFaixaHorario();
+									}
+									CursosDao cDao=new CursosDao();
+									Cursos cr=cDao.findForId(t.getId_curso());
+									str+=t.getId_turma()+"-"+cr.getNome()
+											+" - "
+											+cr.getNivel().getNivelCurso()
+											+horas;
+										
+									%>										
+										<option value="<%=str%>"><%=str%></option><%
+									}
+									//String selecionado=request.getAttribute("");
+									%>
 								</select>
 							</div>
 							
-							<div class="form-group">
+							
+							<div onchange="pegaStatus()" class="status">
 							<label>Status </label><br> <input type="radio" class="radio"
-								name="status" id="ativa"> ATIVA</input> <br><br><input type="radio"
+								name="status" id="ativa" checked="checked" > ATIVA</input> <br><br><input type="radio"
 								class="radio" name="status" id="inativa"> INATIVA</input> <br>
 							<br>
 							</div>
+							
 
 							<button type="submit" class="btn btn-outline-success">Matricular
 								Aluno</button>
@@ -103,103 +136,3 @@
 
 </body>
 </html>
-
-
-<!--
-
-<div class="row">
-	<div class="card" style="width: 28rem; " id="login">
-		<div class="card-body">
-			<form class="itens-form">
-				<h1 style="font-weight: bolder; color: aliceblue; text-align: center;">Cadastro</h1>
-				<div class="form-group">
-					<label for="exampleInputEmail1"> Nome</label> 
-					<input type="text" style="width:400px"
-						class="form-control" id="exampleInputName"
-						aria-describedby="emailHelp" placeholder="Insira aqui seu nome">
-				</div>
-
-				
-			</form>
-		</div>
-	</div>
-</div>
-<br>
-<br>
-<br>
-
-
-
-
-
-	<form method="post" action="/music_school_LP3/AlunosApi">
-		<fieldset>
-			<legend>Novo Aluno:</legend>
-
-			<p>
-				<label>ID </label><br> <input type="number" id="id_aluno"
-					name="id_aluno" size="2" required readonly="readonly" >
-			
-			<p>
-				<label>Nome </label><br> <input type="text" id="nome"
-					name="nome" size="40" required>
-			</p>
-			<div>
-				<label>CEP </label><br> <input onblur="apiCep()" type="text"
-					id="cep" name="cep" pattern="\d{5}-?\d{3}" required
-					onkeypress="$(this).mask('00000-000')" placeholder="Ex.: 00000-000">
-			</div>
-
-
-			<div>
-				<div>
-					<label>Rua </label><br> <input type="text" id="rua" name="rua"
-						required>
-				</div>
-				<div>
-					<label>Número </label><br> <input type="number" id="numero"
-						name="numero" required>
-				</div>
-				<div>
-					<label>Bairro </label><br> <input type="text" id="bairro"
-						name="bairro" required>
-				</div>
-			</div>
-			<div>
-				<div>
-					<label>Cidade </label><br> <input type="text" id="cidade"
-						name="cidade" required>
-				</div>
-				<div>
-					<label>UF </label><br> <input type="text" id="uf" name="uf"
-						required>
-				</div>
-				<div>
-					<label>Complemento </label> <br> <input type="text"
-						id="complemento" name="complemento" required>
-				</div>
-			</div>
-
-			<p>
-				<label>E-Mail </label><br> <input type="email" id="email"
-					name="email" required>
-			</p>
-			<p>
-				<label>Senha </label><br> <input type="password" id="senha"
-					name="senha" required>
-			</p>
-
-
-			
-
-<button type="submit" >Inserir Aluno</button>
-
-
-
-</fieldset>
-
-</form>
--->
-
-
-
