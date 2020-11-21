@@ -8089,7 +8089,7 @@ button.bg-dark:focus {
 
 .w-100 {
   width: 100% !important;
-  height: 500px !important;
+/*   height: 600px !important; */
 }
 
 .w-auto {
