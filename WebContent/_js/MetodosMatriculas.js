@@ -39,7 +39,7 @@ function getTurmas() {
 			//console.log(response);
 			return response.json();
 		})
-		.then(function(meuJson) {
+		.then(function(meuJson) {		
 
 			if (meuJson != null) {
 				console.log(meuJson);
@@ -66,6 +66,7 @@ function getTurmas() {
 				});
 			}
 		});
+
 }
 
 function criaOption(turma) {
@@ -84,17 +85,29 @@ function pegaSelecionadoNoCombo() {
 	var sel = document.getElementById('turmas');
 	var selecionado = sel.options[sel.selectedIndex].value.trim();
 	console.log(selecionado);
-	 var teste = selecionado.substring(0, 2);
-//document.getElementById('id_turma').value
-	console.log(teste);
+	var teste = selecionado.substring(0, 1);
+	document.getElementById('id_turma').value = teste;
+	console.log(document.getElementById('id_turma').value);
 }
 
+
 function pegaStatus() {
-	var sel = document.getElementsByName('status');
-	for (var i in sel) {
-		if(i.checked){
-			console.log(i.value);
-		}		
-	}
+	var sel = document.querySelector('input[name="status"]:checked').value;
+	console.log(sel);
+	document.getElementById('mat_status').value=sel;	
+	console.log("Esse é status: "+document.getElementById('mat_status').value);
+}
+
+function guardaParaSalvar(){
+	var sel = document.querySelector('input[name="status"]:checked').value;
+	console.log(sel);
+	document.getElementById('mat_status').value=sel;
+	
+	var sel = document.getElementById('turmas');
+	var selecionado = sel.options[sel.selectedIndex].value.trim();
+	console.log(selecionado);
+	var teste = selecionado.substring(0, 1);
+	document.getElementById('id_turma').value = teste;
+	console.log(document.getElementById('id_turma').value);
 }
 

@@ -6,7 +6,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="ftt.dao.TurmasDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -46,14 +46,11 @@
 
 
 </head>
-<body onload="getTurmas()">
-	<input type="hidden" id="nomeApi" value="MatriculasApi">
-	<input type="hidden" id="idApi" value="id_matricula">
-	<input type="hidden" id="id_turma" name="id_turma">
-	<% 
-		TurmasDao tDao=new TurmasDao();
-		List<Turmas> turmas=tDao.findAll();
-		
+<body onload="getTurmas();">
+
+	<%
+		TurmasDao tDao = new TurmasDao();
+	List<Turmas> turmas = tDao.findAll();
 	%>
 
 	<main class="fundo">
@@ -64,6 +61,10 @@
 					<form method="post" action="/music_school_LP3/MatriculasApi">
 						<fieldset>
 							<legend>Nova Matricula:</legend>
+							<input type="hidden" id="nomeApi" value="MatriculasApi">
+							<input type="hidden" id="idApi" value="id_matricula">
+							 <input	type="hidden" id="id_turma" name="id_turma"> 
+							 <input	type="hidden" id="mat_status" name="mat_status">
 
 							<div class="form-group">
 								<label>Id Aluno </label><br> <input type="number"
@@ -76,42 +77,39 @@
 									id="nome_aluno" readonly="readonly" class="form-control"
 									name="nome_aluno" size="40" required>
 							</div>
-							<div class="" onchange="pegaSelecionadoNoCombo()" >
+							<div class="" onchange="pegaSelecionadoNoCombo()">
 								<label>Lista de Turmas </label><br> <select id="turmas"
 									class="form-control" name="nome">
 									<%
-									for(Turmas t : turmas){
-									String str="";
-									String horas="";
-									for(Horario h:t.getHorarios()){
-										horas+=" >"+h.getDiaSemana()+" - "+h.getFaixaHorario();
-									}
-									CursosDao cDao=new CursosDao();
-									Cursos cr=cDao.findForId(t.getId_curso());
-									str+=t.getId_turma()+"-"+cr.getNome()
-											+" - "
-											+cr.getNivel().getNivelCurso()
-											+horas;
-										
-									%>										
-										<option value="<%=str%>"><%=str%></option><%
-									}
+										for (Turmas t : turmas) {
+										String str = "";
+										String horas = "";
+										for (Horario h : t.getHorarios()) {
+											horas += " >" + h.getDiaSemana() + " - " + h.getFaixaHorario();
+										}
+										CursosDao cDao = new CursosDao();
+										Cursos cr = cDao.findForId(t.getId_curso());
+										str += t.getId_turma() + "-" + cr.getNome() + " - " + cr.getNivel().getNivelCurso() + horas;
+									%>
+									<option value="<%=str%>"><%=str%></option>
+									<%
+										}
 									//String selecionado=request.getAttribute("");
 									%>
 								</select>
 							</div>
-							
-							
-							<div onchange="pegaStatus()" class="status">
-							<label>Status </label><br> <input type="radio" class="radio"
-								name="status" id="ativa" checked="checked" > ATIVA</input> <br><br><input type="radio"
-								class="radio" name="status" id="inativa"> INATIVA</input> <br>
-							<br>
-							</div>
-							
 
-							<button type="submit" class="btn btn-outline-success">Matricular
-								Aluno</button>
+
+							<span onchange="pegaStatus()" class="status"> <label>Status
+							</label><br> <input type="radio" class="radio" name="status"
+								value="ATIVA" checked="checked"> ATIVA</input> <br>
+							<br> <input type="radio" class="radio" name="status"
+								value="INATIVA"> INATIVA</input> <br> <br>
+							</span>
+
+
+							<button onclick="guardaParaSalvar()" type="submit"
+								class="btn btn-outline-success">Matricular Aluno</button>
 
 						</fieldset>
 
