@@ -113,6 +113,7 @@ public class AlunosApi extends HttpServlet {
 		request.setCharacterEncoding("ISO-8859-1");
 		response.setCharacterEncoding("ISO-8859-1");
 		response.setContentType("application/json");// Mime type
+		
 
 		Alunos aluno = new Alunos();
 		AlunosDao dao = new AlunosDao();
@@ -145,6 +146,8 @@ public class AlunosApi extends HttpServlet {
 		response.getWriter().append("[{\"status\":\"ok\",\"timestemp\":\"" + new Date() + "\"}, ").append(json)
 				.append("]");
 
+		response.sendRedirect("http://localhost:8080/music_school_LP3/ViewIndexAlunos.html");
+		
 		// doGet(request, response);
 	}
 
@@ -195,6 +198,7 @@ public class AlunosApi extends HttpServlet {
 		String json = gg.toJson(aluno);
 		response.getWriter().append("[{\"status\":\"Atualizado ok\",\"timestemp\":\"" + new Date() + "\"}, ")
 				.append(json).append("]");
+		// response.sendRedirect("http://localhost:8080/music_school_LP3/ViewIndexAlunos.html");
 
 	}
 

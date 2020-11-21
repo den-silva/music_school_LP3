@@ -1,5 +1,6 @@
 /*Gerais*/
 
+
 body{
     font-family: 'Roboto', 'sans-serif';
     /*background-image: url('../_img/school.jpg');
@@ -9,7 +10,9 @@ body{
     background-color: rgba(64,224,208, 0.2) ;  */
 }
 
+
 .row{
+    width: auto;
     margin: 0;
 }
 
@@ -25,18 +28,25 @@ p, li{
 
 /*Barra de navegação*/
 header, footer {
+   
     background-color: turquoise;
+    margin: 0;
+    padding: 0 50px 0 50px;
+    
 }
 
 header, .navbar{
-
+   
+    
 
 }
 
 footer{
+    padding: 15px;
     margin-bottom: 0px;
 
 }
+
 
 #nav-container{
     padding-top: 0;
@@ -47,6 +57,11 @@ footer{
 #logo{
     width: 0px;
     padding: -10px;
+}
+
+#logo-img {
+    width: 80%;
+    height: 80%;
 }
 
 .navbar-brand{
@@ -78,8 +93,9 @@ h2{
     font-weight: bolder;
 }
 
-#about-area{
+#about-area{    
     background-color: #f9f9f9;
+    margin-bottom: 10px;
 }
 
 .main-title{
@@ -99,7 +115,8 @@ h2{
 }
 
 .footer{
-    margin-bottom: -100px;
+/*     margin-bottom: -100px; */
+	margin-bottom: -100px;
     padding: 30px;
     background-color: turquoise;
     position: absolute;

@@ -4225,6 +4225,7 @@ input[type="button"].btn-block {
 }
 
 .nav {
+  
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
@@ -8088,6 +8089,7 @@ button.bg-dark:focus {
 
 .w-100 {
   width: 100% !important;
+  height: 500px !important;
 }
 
 .w-auto {

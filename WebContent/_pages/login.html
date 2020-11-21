@@ -15,8 +15,7 @@
 	integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK"
 	crossorigin="anonymous">
 <link rel="stylesheet" href="../_css/style.css">
-<link rel="stylesheet" href="../_css/bootstrap.css">
-<link rel="stylesheet" href="../_css/bootstrap-minty-bootswatch.css">
+
 
 
 <!--SCRIPTS-->
@@ -38,10 +37,12 @@
 
 <!--PROGRESS BAR-->
 <script src="../_js/progressbar.min.js"></script>
+<link rel="stylesheet" href="../_css/bootstrap.css">
+<link rel="stylesheet" href="../_css/bootstrap-minty-bootswatch.css">
 
 <style type="text/css">
 li {
-	font-size: 1.2em;
+	font-size: 1.6em;
 	text-shadow: #000 0.15em 0.15em 0.25em;
 }
 
@@ -56,21 +57,25 @@ h1 {
 	background-size: cover;
 	position: relative;
 	width: 100%;
-	height: 600px;
+	height: 900px;
 }
 </style>
-<!-- BIBLIOTECA PARALLAX (OPCIONAL)
-        <script src="https://cdn.jsdelivr.net/parallax.js/1.4.2/parallax.min.js"></script>
-
-    -->
+<script>
+	function abreHome() {
+		// 		window.location
+		// 		.assign('http://localhost:8080/music_school_LP3/ViewIndexAlunos.html');
+		window.location.href = 'http://localhost:8080/music_school_LP3/ViewHome1.html';
+	}
+</script>
+<script src="../_js/MetodosMatriculas.js"></script>
 
 </head>
-<body>
-	<header>
-
+<body onload="escreveLogado()">
+<!-- cabeçalho -->
+<header>
 		<nav class="navbar navbar-expand-lg navbar-dark fixed top">
-			<a href="#" class="navbar-brand"> <img
-				src="../_img/music_logo.svg" alt="logo">
+			<a href="#" class="navbar-brand"> <img src="../_img/music_logo.svg"
+				alt="logo">
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbar-links" aria-controls="navbar-links"
@@ -92,17 +97,20 @@ h1 {
 						<li class="nav-item"><a class="nav-link" id="home-menu"
 							href="../index.html">Home <span class="sr-only">(current)</span>
 						</a></li>
-						<li class="nav-item"><a class="nav-link" id="contact-menu">Contato</a>
-						</li>
-						<li class="nav-item"><a class="nav-link" id="signup-menu"
-							href="../_pages/form.html">Cadastre-se</a></li>
+<!-- 						<li class="nav-item"><a class="nav-link" id="contact-menu">Contato</a> -->
+<!-- 						</li> -->
+<!-- 						<li class="nav-item"><a class="nav-link" id="signup-menu" -->
+<!-- 							href="_pages/form.html">Cadastre-se</a></li> -->
 						<li class="nav-item"><a class="nav-link" id="signin-menu"
-							href="../_pages/login.html">Entrar</a></li>
+							href="_pages/login.html">Entrar</a></li>
+<!-- 						<li class="nav-item"><a class="nav-link" id="signin-menu" -->
+<!-- 							href="ViewIndexAlunos.html">Gerenciar Alunos</a></li> -->
 					</ul>
 				</div>
 			</div>
 		</nav>
 	</header>
+
 
 	<!-- CONTEÚDO DA PÁGINA -->
 
@@ -118,10 +126,10 @@ h1 {
 				<div class="card-body">
 					<form>
 						<div class="form-group">
-							<label for="exampleInputEmail1"> Usuário</label> <input
+							<label for="exampleInputEmail1"> E-mail</label> <input
 								type="email" class="form-control" id="exampleInputEmail1"
 								aria-describedby="emailHelp"
-								placeholder="Insira aqui seu usuário">
+								placeholder="Insira aqui seu email">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputPassword1">Senha</label> <input
@@ -129,7 +137,7 @@ h1 {
 								placeholder="Insira aqui sua senha">
 						</div>
 						<br>
-						<button type="button" class="btn btn-outline-success">Entrar</button>
+						<button onclick="abreHome()" class="btn btn-outline-success">Entrar</button>
 					</form>
 				</div>
 			</div>
