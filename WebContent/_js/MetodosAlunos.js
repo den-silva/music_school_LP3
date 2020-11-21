@@ -1,3 +1,6 @@
+
+
+
 function alunosPut() {
 
 	//var form = new FormData(document.querySelector('#update-form'));
@@ -43,6 +46,8 @@ function alunosPut() {
 
 function alunosPutParams() {
 
+	//sessionStorage.setItem('operacao', 'A');
+
 	//var form = new FormData(document.querySelector('#update-form'));
 	var form =
 	{
@@ -76,7 +81,8 @@ function alunosPutParams() {
 			'content-type': 'application/json; charset=UTF-8',
 		},
 		//params: JSON.stringify(form), // We send data in JSON format
-		mode: 'cors'
+		mode: 'cors',
+		redirect: 'follow'
 	}
 	var URL = 'http://localhost:8080/music_school_LP3/AlunosApi?' + params;
 
@@ -86,11 +92,15 @@ function alunosPutParams() {
 			return response;
 		})
 		.then(function(teste) {
-			console.log(teste)
+			console.log(teste);
+			window.location
+				.assign('http://localhost:8080/music_school_LP3/ViewIndexAlunos.html');
+
 		})
 		.catch((function(error) {
 			log('Falha na Requisição', error);
 		}));
+
 }
 
 function preencheAlunosParaAlterar() {
@@ -147,13 +157,11 @@ function preencheAlunosParaAlterar() {
 
 }
 
-function deleteAlunos(id){
-	
+function deleteAlunos(id) {
+
 	var nomeApi = document.getElementById('nomeApi').value;
-	var idApi = document.getElementById('idApi').value;	
-	console.log(nomeApi);
-	console.log(idApi);	
-	
+	var idApi = document.getElementById('idApi').value;
+
 	const putMethod = {
 		method: 'DELETE', // Method itself
 		/*headers: {
@@ -170,10 +178,10 @@ function deleteAlunos(id){
 			console.log(response);
 			alert(response.json());
 			return response;
-		})		
+		})
 		.catch((function(error) {
 			log('Falha na Requisição', error);
-		}));	
+		}));
 }
 
 function getAlunos() {
@@ -208,6 +216,11 @@ function getAlunos() {
 
 }
 
+//function guardaParaMatricula(_id, _nome) {
+//	sessionStorage.setItem('id_aluno', _id);
+//	sessionStorage.setItem('nome_aluno', _nome);
+//}
+
 function setTabelaHead(tabela) {
 	//let dados = msg.nome;
 	//let data = Object.keys(msg[0]);
@@ -227,7 +240,7 @@ function setTabelaHead(tabela) {
 
 function geraTabela(tabela, msg) {
 
-	console.log();
+	//console.log();
 	//let dados = msg.nome;
 	for (let element of msg) {
 		let row = tabela.insertRow();
@@ -240,9 +253,12 @@ function geraTabela(tabela, msg) {
 
 		}
 		let id = element.id_aluno;
+		var nome = element['nome'].trim();
 		console.log(id);
+		console.log(nome);
 
 		let cell = row.insertCell();
+		cell.setAttribute('style', 'text-align: center');
 
 		//let btAlterar = document.createElement("button");
 		//		let a = document.createElement("a");
@@ -254,8 +270,8 @@ function geraTabela(tabela, msg) {
 		//		cell.appendChild(a);
 		//btAlterar.appendChild(a);
 		var tagA = `<a href="ViewFormAlterarAlunos.html" 
-		class="btn btn-warning"
-		onclick="passaId(${id})">Alterar ${id}</a>`
+		class="btn btn-warning"		
+		onclick="passaId(${id})">Alterar</a>`
 		cell.innerHTML += tagA;
 
 
@@ -271,22 +287,59 @@ function geraTabela(tabela, msg) {
 		//		btExcluir.appendChild(e);
 		//		cell.appendChild(e);
 		var tagA2 = `<a href="" 
-		class="btn btn-danger"
-		onclick="apagaId(${id})">Excluir ${id}</a>`;
+		class="btn btn-danger" 
+		onclick="apagaId(${id})">Excluir</a>`;
 		cell.innerHTML += tagA2;
 
 		cell.innerHTML += ' ';
 
-		let btMatricular = document.createElement("button");
-		let m = document.createElement("a");
-		var texto = document.createTextNode("Matricular");
-		m.appendChild(texto);
-		m.classList = "btn btn-success";
-		m.href = "ViewFormAlterarAlunos.html";
-		btMatricular.appendChild(m);
-		btMatricular.click("getFormAlterar()");
-		cell.appendChild(m);
+		sessionStorage.setItem(id, nome);
+		//var tagA3 = `<a href="ViewFormInserirMatriculas.html" 
+		var tagA3 = `<a href="CadMatriculaTeste.jsp" 
+		class="btn btn-primary" 		
+		onclick="passaId(${id});">Matricular</a>`;
+		cell.innerHTML += tagA3;
+
+
+//				//let btMatricular = document.createElement("button");
+//				let m = document.createElement("a");
+//				var texto = document.createTextNode("Matricular");
+//				m.appendChild(texto);
+//				m.classList = "btn btn-success";
+//				m.href = "ViewFormInserirMatriculas.html";		
+//				sessionStorage.setItem(id, nome);		
+//				m.onclick=`passaId(${id});`;
+//				console.log(`'${nome}'`);
+//				//m.click(`passaObjeto(${element})`);
+//				console.log(element.email);
+//				//btMatricular.appendChild(m);
+//				//btMatricular.click("getFormAlterar()");
+//				cell.appendChild(m);
 	}
+	console.log(sessionStorage);
+}
+
+function guardaAlunoParaMatricula(nome) {
+	console.log("Guardando na nome do aluno sessao");	
+	console.log("mostra o nome?: " + nome);	
+	sessionStorage.setItem("nome_aluno", nome);
+
+}
+
+function passaObjeto(element){
+	console.log("Guardando na objeto sessao");
+	sessionStorage.setItem('objeto', element.toString());
+}
+
+function retornaObjeto(){
+	console.log("Pegando objeto na sessao");
+	return sessionStorage.getItem('objeto');
+}
+
+function pegaAlunoNaMatricula() {
+	console.log("Pegando nome do aluno sessao");
+	
+	return sessionStorage.getItem('nome_aluno');
 }
 
 function getFormAlterar() {
@@ -310,11 +363,11 @@ function apagaId(id) {
 	}
 }
 
-function proximoId() {	
+function proximoId() {
 
 	var nomeApi = document.getElementById('nomeApi').value;
 	var idApi = document.getElementById('idApi').value;
-	
+
 	var url =
 		`http://localhost:8080/music_school_LP3/${nomeApi}?${idApi}=0`;
 
@@ -333,15 +386,15 @@ function proximoId() {
 			console.log(response);
 			return response.json();
 		})
-		.then(function(meuJson) {			
-				console.log(meuJson.proximo);
-				document.getElementById(idApi).value = meuJson.proximo;				
-			
+		.then(function(meuJson) {
+			console.log(meuJson.proximo);
+			document.getElementById(idApi).value = meuJson.proximo;
+
 		});
 
 }
 
-function redirecionar(pagina){
+function redirecionar(pagina) {
 	return location.href(pagina);
 }
 
