@@ -120,5 +120,26 @@ public class CursosDao implements IcrudPadrao<Cursos> {
 		// TODO Auto-generated method stub
 		return usList;
 	}
+	
+	public int proximoId() {
+		int proximo = 1;
+		// String comandoSql = "select max(id_aluno) + 1 as proximo from tb_alunos";
+		String comandoSql = "select max(id_curso) + 1 as proximo from tb_cursos";
+
+		try (PreparedStatement params = con.prepareStatement(comandoSql)) {
+			try (ResultSet dados = params.executeQuery()) {
+				if (dados.next()) {
+					if (dados.getInt("proximo")!=0) {
+						proximo = dados.getInt("proximo");
+					}
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return proximo;
+	}
 
 }

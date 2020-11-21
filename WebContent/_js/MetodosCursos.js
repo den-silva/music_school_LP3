@@ -1,9 +1,9 @@
-function alunosPut() {
+function cursosPut() {
 
 	//var form = new FormData(document.querySelector('#update-form'));
 	var form =
 	{
-		"id_aluno": document.querySelector('#id_aluno').value,
+		"id_curso": document.querySelector('#id_curso').value,
 		"nome": document.querySelector('#nome').value,
 		"endereco": {
 			"rua": document.querySelector('#rua').value,
@@ -26,7 +26,7 @@ function alunosPut() {
 		body: JSON.stringify(form), // We send data in JSON format
 		mode: 'cors'
 	}
-	var URL = 'http://localhost:8080/music_school_LP3/AlunosApi';
+	var URL = 'http://localhost:8080/music_school_LP3/cursosApi';
 
 	fetch(URL, putMethod)
 		.then(function(response) {
@@ -41,12 +41,12 @@ function alunosPut() {
 		}));
 }
 
-function alunosPutParams() {
+function cursosPutParams() {
 
 	//var form = new FormData(document.querySelector('#update-form'));
 	var form =
 	{
-		"id_aluno": document.querySelector('#id_aluno').value,
+		"id_curso": document.querySelector('#id_curso').value,
 		"nome": document.querySelector('#nome').value,
 		"rua": document.querySelector('#rua').value,
 		"complemento": document.querySelector('#complemento').value,
@@ -57,7 +57,7 @@ function alunosPutParams() {
 		"email": document.querySelector('#email').value,
 		"senha": document.querySelector('#senha').value,
 	};
-	var params = `id_aluno=${form.id_aluno}
+	var params = `id_curso=${form.id_curso}
 	&nome=${form.nome}
 	&rua=${form.rua}
 	&complemento=${form.complemento}
@@ -78,7 +78,7 @@ function alunosPutParams() {
 		//params: JSON.stringify(form), // We send data in JSON format
 		mode: 'cors'
 	}
-	var URL = 'http://localhost:8080/music_school_LP3/AlunosApi?' + params;
+	var URL = 'http://localhost:8080/music_school_LP3/cursosApi?' + params;
 
 	fetch(URL, putMethod)
 		.then(function(response) {
@@ -93,7 +93,7 @@ function alunosPutParams() {
 		}));
 }
 
-function preencheAlunosParaAlterar() {
+function preenchecursosParaAlterar() {
 
 	document.querySelector('#nome').value = '';
 	document.querySelector('#rua').value = '';
@@ -105,12 +105,12 @@ function preencheAlunosParaAlterar() {
 	document.querySelector('#email').value = '';
 	document.querySelector('#senha').value = '';
 
-	//var id_aluno = document.querySelector('#id_aluno').value;
-	var id_aluno = recebeId();
-	console.log(id_aluno);
+	//var id_curso = document.querySelector('#id_curso').value;
+	var id_curso = recebeId();
+	console.log(id_curso);
 	var form = document.querySelector('#update-form');
 	var url =
-		`http://localhost:8080/music_school_LP3/AlunosApi?id_aluno=${id_aluno}`;
+		`http://localhost:8080/music_school_LP3/cursosApi?id_curso=${id_curso}`;
 
 
 	var myInit = {
@@ -130,7 +130,7 @@ function preencheAlunosParaAlterar() {
 		.then(function(meuJson) {
 			if (meuJson.nome != null) {
 				console.log(meuJson);
-				document.querySelector('#id_aluno').value = meuJson.id_aluno;
+				document.querySelector('#id_curso').value = meuJson.id_curso;
 				document.querySelector('#nome').value = meuJson.nome;
 				console.log(meuJson.nome);
 				document.querySelector('#rua').value = meuJson.endereco.rua;
@@ -147,7 +147,7 @@ function preencheAlunosParaAlterar() {
 
 }
 
-function deleteAlunos(id){
+function deletecursos(id){
 	
 	var nomeApi = document.getElementById('nomeApi').value;
 	var idApi = document.getElementById('idApi').value;	
@@ -162,7 +162,7 @@ function deleteAlunos(id){
 		//params: JSON.stringify(form), // We send data in JSON format
 		mode: 'cors' */
 	}
-	//var URL = 'http://localhost:8080/music_school_LP3/AlunosApi?id_aluno=' + id;
+	//var URL = 'http://localhost:8080/music_school_LP3/cursosApi?id_curso=' + id;
 	var URL = `http://localhost:8080/music_school_LP3/${nomeApi}?${idApi}=${id}`
 
 	fetch(URL, putMethod)
@@ -176,9 +176,9 @@ function deleteAlunos(id){
 		}));	
 }
 
-function getAlunos() {
+function getCursos() {
 
-	var url = 'http://localhost:8080/music_school_LP3/AlunosApi';
+	var url = 'http://localhost:8080/music_school_LP3/CursosApi';
 	var body = document.body;
 	var tabela = document.getElementById("myTable");
 	body.appendChild(tabela);
@@ -211,7 +211,7 @@ function getAlunos() {
 function setTabelaHead(tabela) {
 	//let dados = msg.nome;
 	//let data = Object.keys(msg[0]);
-	let dados = (['Id_Aluno', 'Nome', 'Email', 'Ações']);
+	let dados = (['Id_curso', 'Nome', 'Nível', 'Duração', 'Ações']);
 
 	//let thead = tabela.createTHead();
 	var row = tabela.insertRow();
@@ -232,14 +232,14 @@ function geraTabela(tabela, msg) {
 	for (let element of msg) {
 		let row = tabela.insertRow();
 		for (key in element) {
-			if (key != 'endereco' && key != 'senha') {
+			
 				let cell = row.insertCell();
 				let text = document.createTextNode(element[key]);
 				cell.appendChild(text);
-			}
+			
 
 		}
-		let id = element.id_aluno;
+		let id = element.id_curso;
 		console.log(id);
 
 		let cell = row.insertCell();
@@ -250,10 +250,10 @@ function geraTabela(tabela, msg) {
 		//		a.appendChild(texto);		
 		//		a.onclick=`passaId(${id})`;
 		//		a.classList = "btn btn-warning";
-		//		a.href = "ViewFormAlterarAlunos.html";
+		//		a.href = "ViewFormAlterarcursos.html";
 		//		cell.appendChild(a);
 		//btAlterar.appendChild(a);
-		var tagA = `<a href="ViewFormAlterarAlunos.html" 
+		var tagA = `<a href="ViewFormAlterarCursos.html" 
 		class="btn btn-warning"
 		onclick="passaId(${id})">Alterar ${id}</a>`
 		cell.innerHTML += tagA;
@@ -277,35 +277,35 @@ function geraTabela(tabela, msg) {
 
 		cell.innerHTML += ' ';
 
-		let btMatricular = document.createElement("button");
+		/*let btMatricular = document.createElement("button");
 		let m = document.createElement("a");
 		var texto = document.createTextNode("Matricular");
 		m.appendChild(texto);
 		m.classList = "btn btn-success";
-		m.href = "ViewFormAlterarAlunos.html";
+		m.href = "ViewFormAlterarcursos.html";
 		btMatricular.appendChild(m);
 		btMatricular.click("getFormAlterar()");
-		cell.appendChild(m);
+		cell.appendChild(m);*/
 	}
 }
 
 function getFormAlterar() {
-	//location.assign('ViewFormAlterarAlunos.html');
+	//location.assign('ViewFormAlterarcursos.html');
 	console.log('Alterar');
 
 }
 
 function passaId(id) {
-	sessionStorage.setItem('id_aluno', id);
+	sessionStorage.setItem('id_curso', id);
 }
 
 function recebeId() {
-	return sessionStorage.getItem('id_aluno');
+	return sessionStorage.getItem('id_curso');
 }
 
 function apagaId(id) {
-	if (confirm(`Tem certeza que deseja excluir esse Aluno id: ${id}?`)) {
-		deleteAlunos(id);
+	if (confirm(`Tem certeza que deseja excluir esse curso id: ${id}?`)) {
+		deletecursos(id);
 		console.log(id + " deletado");
 	}
 }
@@ -314,6 +314,9 @@ function proximoId() {
 
 	var nomeApi = document.getElementById('nomeApi').value;
 	var idApi = document.getElementById('idApi').value;
+	console.log(idApi);
+	console.log(idApi);
+	//console.log(nomeApi);
 	
 	var url =
 		`http://localhost:8080/music_school_LP3/${nomeApi}?${idApi}=0`;

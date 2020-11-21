@@ -1,9 +1,9 @@
-function alunosPut() {
+function professoresPut() {
 
 	//var form = new FormData(document.querySelector('#update-form'));
 	var form =
 	{
-		"id_aluno": document.querySelector('#id_aluno').value,
+		"id_professor": document.querySelector('#id_professor').value,
 		"nome": document.querySelector('#nome').value,
 		"endereco": {
 			"rua": document.querySelector('#rua').value,
@@ -26,7 +26,7 @@ function alunosPut() {
 		body: JSON.stringify(form), // We send data in JSON format
 		mode: 'cors'
 	}
-	var URL = 'http://localhost:8080/music_school_LP3/AlunosApi';
+	var URL = 'http://localhost:8080/music_school_LP3/ProfessoresApi';
 
 	fetch(URL, putMethod)
 		.then(function(response) {
@@ -41,12 +41,12 @@ function alunosPut() {
 		}));
 }
 
-function alunosPutParams() {
+function professoresPutParams() {
 
 	//var form = new FormData(document.querySelector('#update-form'));
 	var form =
 	{
-		"id_aluno": document.querySelector('#id_aluno').value,
+		"id_professor": document.querySelector('#id_professor').value,
 		"nome": document.querySelector('#nome').value,
 		"rua": document.querySelector('#rua').value,
 		"complemento": document.querySelector('#complemento').value,
@@ -57,7 +57,7 @@ function alunosPutParams() {
 		"email": document.querySelector('#email').value,
 		"senha": document.querySelector('#senha').value,
 	};
-	var params = `id_aluno=${form.id_aluno}
+	var params = `id_professor=${form.id_professor}
 	&nome=${form.nome}
 	&rua=${form.rua}
 	&complemento=${form.complemento}
@@ -78,7 +78,7 @@ function alunosPutParams() {
 		//params: JSON.stringify(form), // We send data in JSON format
 		mode: 'cors'
 	}
-	var URL = 'http://localhost:8080/music_school_LP3/AlunosApi?' + params;
+	var URL = 'http://localhost:8080/music_school_LP3/ProfessoresApi?' + params;
 
 	fetch(URL, putMethod)
 		.then(function(response) {
@@ -93,7 +93,7 @@ function alunosPutParams() {
 		}));
 }
 
-function preencheAlunosParaAlterar() {
+function preencheProfessoresParaAlterar() {
 
 	document.querySelector('#nome').value = '';
 	document.querySelector('#rua').value = '';
@@ -106,11 +106,11 @@ function preencheAlunosParaAlterar() {
 	document.querySelector('#senha').value = '';
 
 	//var id_aluno = document.querySelector('#id_aluno').value;
-	var id_aluno = recebeId();
-	console.log(id_aluno);
+	var id_professor = recebeId();
+	console.log(id_professor);
 	var form = document.querySelector('#update-form');
 	var url =
-		`http://localhost:8080/music_school_LP3/AlunosApi?id_aluno=${id_aluno}`;
+		`http://localhost:8080/music_school_LP3/ProfessoresApi?id_professor=${id_professor}`;
 
 
 	var myInit = {
@@ -130,7 +130,7 @@ function preencheAlunosParaAlterar() {
 		.then(function(meuJson) {
 			if (meuJson.nome != null) {
 				console.log(meuJson);
-				document.querySelector('#id_aluno').value = meuJson.id_aluno;
+				document.querySelector('#id_professor').value = meuJson.id_professor;
 				document.querySelector('#nome').value = meuJson.nome;
 				console.log(meuJson.nome);
 				document.querySelector('#rua').value = meuJson.endereco.rua;
@@ -147,12 +147,10 @@ function preencheAlunosParaAlterar() {
 
 }
 
-function deleteAlunos(id){
+function deleteProfessores(id){
 	
 	var nomeApi = document.getElementById('nomeApi').value;
-	var idApi = document.getElementById('idApi').value;	
-	console.log(nomeApi);
-	console.log(idApi);	
+	var idApi = document.getElementById('idApi').value;		
 	
 	const putMethod = {
 		method: 'DELETE', // Method itself
@@ -176,9 +174,9 @@ function deleteAlunos(id){
 		}));	
 }
 
-function getAlunos() {
+function getProfessores() {
 
-	var url = 'http://localhost:8080/music_school_LP3/AlunosApi';
+	var url = 'http://localhost:8080/music_school_LP3/ProfessoresApi';
 	var body = document.body;
 	var tabela = document.getElementById("myTable");
 	body.appendChild(tabela);
@@ -211,7 +209,7 @@ function getAlunos() {
 function setTabelaHead(tabela) {
 	//let dados = msg.nome;
 	//let data = Object.keys(msg[0]);
-	let dados = (['Id_Aluno', 'Nome', 'Email', 'Ações']);
+	let dados = (['Id_Professor', 'Nome', 'Email', 'Ações']);
 
 	//let thead = tabela.createTHead();
 	var row = tabela.insertRow();
@@ -239,7 +237,7 @@ function geraTabela(tabela, msg) {
 			}
 
 		}
-		let id = element.id_aluno;
+		let id = element.id_professor;
 		console.log(id);
 
 		let cell = row.insertCell();
@@ -253,7 +251,7 @@ function geraTabela(tabela, msg) {
 		//		a.href = "ViewFormAlterarAlunos.html";
 		//		cell.appendChild(a);
 		//btAlterar.appendChild(a);
-		var tagA = `<a href="ViewFormAlterarAlunos.html" 
+		var tagA = `<a href="ViewFormAlterarProfessores.html" 
 		class="btn btn-warning"
 		onclick="passaId(${id})">Alterar ${id}</a>`
 		cell.innerHTML += tagA;
@@ -277,7 +275,7 @@ function geraTabela(tabela, msg) {
 
 		cell.innerHTML += ' ';
 
-		let btMatricular = document.createElement("button");
+		/*let btMatricular = document.createElement("button");
 		let m = document.createElement("a");
 		var texto = document.createTextNode("Matricular");
 		m.appendChild(texto);
@@ -285,7 +283,7 @@ function geraTabela(tabela, msg) {
 		m.href = "ViewFormAlterarAlunos.html";
 		btMatricular.appendChild(m);
 		btMatricular.click("getFormAlterar()");
-		cell.appendChild(m);
+		cell.appendChild(m);*/
 	}
 }
 
@@ -296,16 +294,16 @@ function getFormAlterar() {
 }
 
 function passaId(id) {
-	sessionStorage.setItem('id_aluno', id);
+	sessionStorage.setItem('id_professor', id);
 }
 
 function recebeId() {
-	return sessionStorage.getItem('id_aluno');
+	return sessionStorage.getItem('id_professor');
 }
 
 function apagaId(id) {
-	if (confirm(`Tem certeza que deseja excluir esse Aluno id: ${id}?`)) {
-		deleteAlunos(id);
+	if (confirm(`Tem certeza que deseja excluir esse Professor id: ${id}?`)) {
+		deleteProfessores(id);
 		console.log(id + " deletado");
 	}
 }
@@ -314,6 +312,8 @@ function proximoId() {
 
 	var nomeApi = document.getElementById('nomeApi').value;
 	var idApi = document.getElementById('idApi').value;
+	console.log(nomeApi);
+	console.log(idApi);
 	
 	var url =
 		`http://localhost:8080/music_school_LP3/${nomeApi}?${idApi}=0`;

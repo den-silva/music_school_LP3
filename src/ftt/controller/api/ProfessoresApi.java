@@ -67,11 +67,21 @@ public class ProfessoresApi extends HttpServlet {
 
 		if (request.getParameter("id_professor") != null) {
 			int professorId = Integer.valueOf(request.getParameter("id_professor"));
-
+			
 			try {
+				
+				if(professorId == 0){
+					System.out.println(dao.proximoId());
+					String proximoId = dao.proximoId() + "}";
+					response.getWriter().append('{').append('"').append("proximo").append('"').append(": ")
+							.append(proximoId);				
+				
+			}else {
 				Professores professor = dao.findForId(professorId);
 				response.getWriter().append(gson.toJson(professor));
-			} catch (SQLException e) {
+			} 
+			
+			}catch (SQLException e) {
 
 				e.printStackTrace();
 				response.getWriter().append(e.getMessage());
