@@ -68,8 +68,17 @@ public class CursosApi extends HttpServlet {
 			int cursoId = Integer.valueOf(request.getParameter("id_curso"));
 			
 			try {
-				Cursos curso = dao.findForId(cursoId);
-				response.getWriter().append(gson.toJson(curso));			
+				if(cursoId ==0) {
+					System.out.println(dao.proximoId());
+					String proximoId = dao.proximoId() + "}";
+					response.getWriter().append('{').append('"').append("proximo").append('"').append(": ")
+					.append(proximoId);				
+
+				}else {
+					Cursos curso = dao.findForId(cursoId);
+					response.getWriter().append(gson.toJson(curso));					
+				}
+					
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
