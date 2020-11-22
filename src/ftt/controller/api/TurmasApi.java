@@ -1,11 +1,9 @@
 package ftt.controller.api;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -17,15 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import ftt.dao.AlunosDao;
+import ftt.dao.CursosDao;
 import ftt.dao.TurmasDao;
-import ftt.dao.UsuariosDao;
-import ftt.enums.EnumNivelCurso;
-import ftt.model.Alunos;
-import ftt.model.Endereco;
+import ftt.model.Cursos;
 import ftt.model.MetodosGerais;
 import ftt.model.Turmas;
-import ftt.model.Usuarios;
 
 /**
  * Servlet implementation class AlunosApi
@@ -69,14 +63,20 @@ public class TurmasApi extends HttpServlet {
 
 		Gson gson = new Gson();
 		TurmasDao dao = new TurmasDao();
+		//alteracao para retornar também nível do curso
+		CursosDao cDao=new CursosDao();
+		Cursos curso=new Cursos();
 
 		if (request.getParameter("id_turma") != null) {
 			int idReq = Integer.valueOf(request.getParameter("id_turma"));
 
 			try {
 				Turmas turma = dao.findForId(idReq);
+				curso=cDao.findForId(turma.getId_curso());
 
-				response.getWriter().append(gson.toJson(turma));
+				response.getWriter()
+				.append(gson.toJson(turma))
+				.append(gson.toJson(curso.getNivel().getNivelCurso()));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -87,6 +87,7 @@ public class TurmasApi extends HttpServlet {
 				ArrayList<Turmas> listaTurmas = dao.findAll();
 
 				response.getWriter().append(gson.toJson(listaTurmas));
+				response.sendRedirect("ViewIndexProfessores.html");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -103,8 +104,9 @@ public class TurmasApi extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("ISO-8859-1");
-		response.setCharacterEncoding("ISO-8859-1");
+		//request.setCharacterEncoding("ISO-8859-1");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");// Mime type
 
 		Turmas turma = new Turmas();
@@ -116,30 +118,25 @@ public class TurmasApi extends HttpServlet {
 		turma.setNome_curso(request.getParameter("nome_curso"));
 		turma.setId_professor(request.getParameter("id_professor"));
 		turma.setNome_professor(request.getParameter("nome_professor"));
-		String retNivel = request.getParameter("nivel");
+				
+		String horarios = request.getParameter("horario");
 
-		turma.setNivel(MetodosGerais.stringParaEnumNivel(retNivel));
-
-//		if (retNivel == EnumNivelCurso.BASICO.getNivelCurso()) {
-//			turma.setNivel(EnumNivelCurso.BASICO);
-//		} else if (retNivel == EnumNivelCurso.INTERMEDIARIO.getNivelCurso()) {
-//			turma.setNivel(EnumNivelCurso.INTERMEDIARIO);
-//		} else {
-//			turma.setNivel(EnumNivelCurso.AVANCADO);
-//		}
+		turma.setHorarios(MetodosGerais.stringParaListaHorarios(horarios));	
 
 		try {
 			dao.insert(turma);
 			System.out.println("Turma inserida com sucesso!! " + turma.getId_turma() + " Professor: "
 					+ turma.getNome_professor() + " Curso: " + turma.getNome_curso());
+			String json = gg.toJson(turma);
+			response.getWriter().append("[{\"status\":\"ok\",\"timestemp\":\"" + new Date() + "\"}, ").append(json)
+					.append("]");
+			response.sendRedirect("ViewIndexProfessores.html");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		String json = gg.toJson(turma);
-		response.getWriter().append("[{\"status\":\"ok\",\"timestemp\":\"" + new Date() + "\"}, ").append(json)
-				.append("]");
+		
 
 		// doGet(request, response);
 	}
@@ -168,9 +165,9 @@ public class TurmasApi extends HttpServlet {
 		turma.setNome_curso(request.getParameter("nome_curso"));
 		turma.setId_professor(request.getParameter("id_professor"));
 		turma.setNome_professor(request.getParameter("nome_professor"));
-		String retNivel = request.getParameter("nivel");
+		String horarios = request.getParameter("horario");
 
-		turma.setNivel(MetodosGerais.stringParaEnumNivel(retNivel));
+		turma.setHorarios(MetodosGerais.stringParaListaHorarios(horarios));
 
 		try {
 			dao.update(turma);

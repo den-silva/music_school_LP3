@@ -20,6 +20,7 @@ import ftt.dao.MatriculasDao;
 import ftt.dao.ProfessoresDao;
 import ftt.model.Cursos;
 import ftt.model.Matriculas;
+import ftt.model.MetodosGerais;
 import ftt.model.Professores;
 
 /**
@@ -113,19 +114,28 @@ public class MatriculasApi extends HttpServlet {
 		
 		Matriculas m = new Matriculas();
 		MatriculasDao dao = new MatriculasDao();
-		//Gson gson = new Gson();
+		Gson gson = new Gson();
 		
 	
 		m.setId_aluno(request.getParameter("id_aluno"));
-		m.setId_curso(request.getParameter("id_curso"));
+		m.setNome_aluno(request.getParameter("nome_aluno"));
+		m.setId_turma(request.getParameter("id_turma"));
+		m.setNome_curso(request.getParameter("nome_curso"));
+		m.setMat_status(MetodosGerais
+				.stringParaEnumMatStatus(request.getParameter("mat_status")));
+		
 		
 		try {
 			userData.put(m.getId_matricula(), m);
 			dao.insert(m);
 			System.out.println(m);
 			
+			String json=gson.toJson(m);
+			
 			response.getWriter()
-			.append("{\"status\":\"ok\",\"timestemp\":" +new Date() +"}");
+			.append("[{\"status\":\"ok\",\"timestemp\":\"" + new Date() + "\"}, ").append(json)
+			.append("]");			
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -147,9 +157,12 @@ public class MatriculasApi extends HttpServlet {
 		MatriculasDao dao = new MatriculasDao();
 		Gson gson = new Gson();
 		
-		m.setId_matricula(request.getParameter("id_matricula"));
-		m.setId_curso(request.getParameter("id_curso"));
 		m.setId_aluno(request.getParameter("id_aluno"));
+		m.setNome_aluno(request.getParameter("nome_aluno"));
+		m.setId_turma(request.getParameter("id_turma"));
+		m.setNome_curso(request.getParameter("nome_curso"));
+		m.setMat_status(MetodosGerais
+				.stringParaEnumMatStatus(request.getParameter("mat_status")));
 
 		
 		try {
@@ -157,8 +170,10 @@ public class MatriculasApi extends HttpServlet {
 			dao.update(m);
 			System.out.println(m);
 			
+			String json=gson.toJson(m);
 			response.getWriter()
-			.append("{\"status\":\"ok\",\"timestemp\":" +new Date() +"}");
+			.append("[{\"status\":\" alterado ok\",\"timestemp\":\"" + new Date() + "\"}, ").append(json)
+			.append("]");	
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<!-- <meta charset="ISO-8859-1"> -->
+<title>Cadastro de Cursos</title>
+<!-- 
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+<script src="_js/cep.js"></script>
+<script src="_js/MetodosCursos.js"></script>
+<link rel="stylesheet" href="_css/style.css">
+<link rel="stylesheet" href="_css/bootstrap.css">
+<link rel="stylesheet" href="_css/bootstrap-minty-bootswatch.css">
+<style>
+.fundo {
+	background-image: url(_img/musical1.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.card {
+	background-color: #FFFAF0;
+}
+</style>
+
+
+</head>
+<body onload="proximoId();">
+	<input type="hidden" id="nomeApi" value="CursosApi">
+	<input type="hidden" id="idApi" value="id_curso">
+
+
+	<main class="fundo">
+		<br> <br>
+		<div class="row">
+			<div class="card" style="width: 40rem;" id="login">
+				<div class="card-body">
+					<form method="post" action="/music_school_LP3/CursosApi">
+						<fieldset>
+							<legend>Novo Curso:</legend>
+							<input type="hidden" id="periodo" name="periodo"> 
+							<input type="hidden" id="nivel" name="nivel">
+							<div class="form-group">
+								<label>ID </label><br> <input type="number" id="id_curso"
+									class="form-control" name="id_curso" size="2" required
+									readonly="readonly">
+							</div>
+
+							<div class="form-group">
+
+								<label>Nome </label><br> <input type="text" id="nome"
+									class="form-control" name="nome" size="40" required>
+							</div>
+
+							<div class="form-group">
+								<label>Escolha o Nível </label><br> <select
+									name="sel-nivel" id="sel-nivel">
+									<option value="BASICO">BASICO</option>
+									<option value="INTERMEDIARIO">INTERMEDIARIO</option>
+									<option value="AVANCADO">AVANCADO</option>
+								</select>
+
+							</div>
+
+
+							<div class="form-group">
+								<label>Escolha a Duração </label><br> <select
+									name="sel-periodo" id="sel-periodo">
+									<option value="3 meses">3 meses</option>
+									<option value="6 meses">6 meses</option>
+									<option value="9 meses">9 meses</option>
+									<option value="12 meses">12 meses</option>
+								</select>
+							</div>
+							<button onclick="guardaParaCursos()" type="submit"
+								class="btn btn-outline-success">Inserir Curso</button>
+
+						</fieldset>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<br><br><br>
+	</main>
+	<footer class="mt-auto py-3">
+		<div id="contact-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">copyright @2020</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
+</body>
+</html>
+
+
+<!--
+
+<div class="row">
+	<div class="card" style="width: 28rem; " id="login">
+		<div class="card-body">
+			<form class="itens-form">
+				<h1 style="font-weight: bolder; color: aliceblue; text-align: center;">Cadastro</h1>
+				<div class="form-group">
+					<label for="exampleInputEmail1"> Nome</label> 
+					<input type="text" style="width:400px"
+						class="form-control" id="exampleInputName"
+						aria-describedby="emailHelp" placeholder="Insira aqui seu nome">
+				</div>
+
+				
+			</form>
+		</div>
+	</div>
+</div>
+<br>
+<br>
+<br>
+
+
+
+
+
+	<form method="post" action="/music_school_LP3/CursosApi">
+		<fieldset>
+			<legend>Novo Curso:</legend>
+
+			<p>
+				<label>ID </label><br> <input type="number" id="id_Curso"
+					name="id_Curso" size="2" required readonly="readonly" >
+			
+			<p>
+				<label>Nome </label><br> <input type="text" id="nome"
+					name="nome" size="40" required>
+			</p>
+			<div>
+				<label>CEP </label><br> <input onblur="apiCep()" type="text"
+					id="cep" name="cep" pattern="\d{5}-?\d{3}" required
+					onkeypress="$(this).mask('00000-000')" placeholder="Ex.: 00000-000">
+			</div>
+
+
+			<div>
+				<div>
+					<label>Rua </label><br> <input type="text" id="rua" name="rua"
+						required>
+				</div>
+				<div>
+					<label>Número </label><br> <input type="number" id="numero"
+						name="numero" required>
+				</div>
+				<div>
+					<label>Bairro </label><br> <input type="text" id="bairro"
+						name="bairro" required>
+				</div>
+			</div>
+			<div>
+				<div>
+					<label>Cidade </label><br> <input type="text" id="cidade"
+						name="cidade" required>
+				</div>
+				<div>
+					<label>UF </label><br> <input type="text" id="uf" name="uf"
+						required>
+				</div>
+				<div>
+					<label>Complemento </label> <br> <input type="text"
+						id="complemento" name="complemento" required>
+				</div>
+			</div>
+
+			<p>
+				<label>E-Mail </label><br> <input type="email" id="email"
+					name="email" required>
+			</p>
+			<p>
+				<label>Senha </label><br> <input type="password" id="senha"
+					name="senha" required>
+			</p>
+
+
+			
+
+<button type="submit" >Inserir Curso</button>
+
+
+
+</fieldset>
+
+</form>
+-->
+
+
+

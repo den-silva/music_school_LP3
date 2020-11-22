@@ -1,4 +1,5 @@
 function apiCep() {
+	//var op=sessionStorage.getItem('operacao');
 
 	var cepUsu = document.getElementById('cep').value;
 	document.getElementById('rua').value = "";
@@ -37,7 +38,6 @@ function apiCep() {
 	else {
 		cepUsu.value = "";
 		alert("Preencha o cep corretamente!!");
-
 
 	}
 

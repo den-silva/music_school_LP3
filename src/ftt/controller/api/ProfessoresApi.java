@@ -59,7 +59,7 @@ public class ProfessoresApi extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		request.setCharacterEncoding("ISO-8859-1");
-		response.setCharacterEncoding("ISO-8859-1");
+		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");// Mime type
 
 		Gson gson = new Gson();
@@ -67,11 +67,21 @@ public class ProfessoresApi extends HttpServlet {
 
 		if (request.getParameter("id_professor") != null) {
 			int professorId = Integer.valueOf(request.getParameter("id_professor"));
-
+			
 			try {
+				
+				if(professorId == 0){
+					System.out.println(dao.proximoId());
+					String proximoId = dao.proximoId() + "}";
+					response.getWriter().append('{').append('"').append("proximo").append('"').append(": ")
+							.append(proximoId);				
+				
+			}else {
 				Professores professor = dao.findForId(professorId);
 				response.getWriter().append(gson.toJson(professor));
-			} catch (SQLException e) {
+			} 
+			
+			}catch (SQLException e) {
 
 				e.printStackTrace();
 				response.getWriter().append(e.getMessage());
@@ -129,7 +139,8 @@ public class ProfessoresApi extends HttpServlet {
 			System.out.println(p);
 
 			response.getWriter().append("{\"status\":\"ok\",\"timestemp\":" + new Date() + "}");
-
+			response.sendRedirect("ViewIndexProfessores.html");
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -63,13 +63,26 @@ public class AlunosApi extends HttpServlet {
 
 		Gson gson = new Gson();
 		AlunosDao dao = new AlunosDao();
+		String recebeId = request.getParameter("id_aluno");
+		System.out.println("ta vazio: " + recebeId);
 
-		if (request.getParameter("id_aluno") != null) {
+		// if (request.getParameter("id_aluno") != null) {
+		if (request.getParameter("id_aluno") != null  ) {
 			int idReq = Integer.valueOf(request.getParameter("id_aluno"));
 
 			try {
-				Alunos aluno = dao.findForId(idReq);
-				response.getWriter().append(gson.toJson(aluno));
+
+				if (idReq == 0) {
+					System.out.println(dao.proximoId());
+					String proximoId = dao.proximoId() + "}";
+					response.getWriter().append('{').append('"').append("proximo").append('"').append(": ")
+							.append(proximoId);
+
+				} else {
+					Alunos aluno = dao.findForId(idReq);
+					response.getWriter().append(gson.toJson(aluno));
+				}
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -77,7 +90,7 @@ public class AlunosApi extends HttpServlet {
 
 		} else {
 			try {
-				ArrayList<Alunos> listaAlunos = dao.findAll();			
+				ArrayList<Alunos> listaAlunos = dao.findAll();
 
 				response.getWriter().append(gson.toJson(listaAlunos));
 			} catch (SQLException e) {
@@ -100,6 +113,7 @@ public class AlunosApi extends HttpServlet {
 		request.setCharacterEncoding("ISO-8859-1");
 		response.setCharacterEncoding("ISO-8859-1");
 		response.setContentType("application/json");// Mime type
+		
 
 		Alunos aluno = new Alunos();
 		AlunosDao dao = new AlunosDao();
@@ -132,6 +146,8 @@ public class AlunosApi extends HttpServlet {
 		response.getWriter().append("[{\"status\":\"ok\",\"timestemp\":\"" + new Date() + "\"}, ").append(json)
 				.append("]");
 
+		response.sendRedirect("http://localhost:8080/music_school_LP3/ViewIndexAlunos.html");
+		
 		// doGet(request, response);
 	}
 
@@ -182,6 +198,7 @@ public class AlunosApi extends HttpServlet {
 		String json = gg.toJson(aluno);
 		response.getWriter().append("[{\"status\":\"Atualizado ok\",\"timestemp\":\"" + new Date() + "\"}, ")
 				.append(json).append("]");
+		// response.sendRedirect("http://localhost:8080/music_school_LP3/ViewIndexAlunos.html");
 
 	}
 

@@ -74,13 +74,13 @@ public class AlunosDao implements IcrudPadrao<Alunos> {
 	public void delete(Alunos entidade) throws SQLException {
 		// TODO Auto-generated method stub
 		System.out.println("Inicio DELETE");
-		String query = "DELETE FROM tb_alunos WHERE id_aluno = ?";		
+		String query = "DELETE FROM tb_alunos WHERE id_aluno = ?";
 
 		try (PreparedStatement ps = con.prepareStatement(query)) {
-			ps.setInt(1, entidade.getId_aluno());			
+			ps.setInt(1, entidade.getId_aluno());
 			ps.executeUpdate();
 			System.out.println("Aluno " + entidade.getId_aluno() + " excluido");
-			
+
 			System.out.println("Final DELETE");
 
 		} catch (SQLException e) {
@@ -149,18 +149,19 @@ public class AlunosDao implements IcrudPadrao<Alunos> {
 		}
 
 		return listaAlunos;
-
 	}
 
 	public int proximoId() {
-		int proximo = 0;
-		//String comandoSql = "select max(id_aluno) + 1 as proximo from tb_alunos";
+		int proximo = 1;
+		// String comandoSql = "select max(id_aluno) + 1 as proximo from tb_alunos";
 		String comandoSql = "select max(id_aluno) + 1 as proximo from tb_alunos";
-		
+
 		try (PreparedStatement params = con.prepareStatement(comandoSql)) {
 			try (ResultSet dados = params.executeQuery()) {
-				if(dados.next()) {
-					proximo = dados.getInt("proximo");
+				if (dados.next()) {
+					if (dados.getInt("proximo")!=0) {
+						proximo = dados.getInt("proximo");
+					}
 				}
 			}
 		} catch (SQLException e) {
