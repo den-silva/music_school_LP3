@@ -14,77 +14,126 @@
 <script src="_js/cep.js"></script>
 <script src="_js/MetodosProfessores.js"></script>
 
-<link rel="stylesheet" href="../_css/style.css">
-<link rel="stylesheet" href="../_css/bootstrap.css">
-<link rel="stylesheet" href="../_css/bootstrap-minty-bootswatch.css">
+<link rel="stylesheet" href="_css/style.css">
+<link rel="stylesheet" href="_css/bootstrap.css">
+<link rel="stylesheet" href="_css/bootstrap-minty-bootswatch.css">
+<style>
+.fundo {
+	background-image: url(_img/musical1.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.card {
+	background-color: #FFFAF0;
+}
+</style>
+
 
 </head>
-<body onload = "preencheProfessoresParaAlterar();">
-	<input type="hidden" id="nomeApi" value="AlunosApi">
-	<input type="hidden" id="idApi" value="id_aluno">
-	<form id="update-form">
-		<fieldset>
-			<legend>Alteração de Professores</legend>
+<body onload="preencheProfessoresParaAlterar();">
+	<input type="hidden" id="nomeApi" value="ProfessoresApi">
+	<input type="hidden" id="idApi" value="id_professor">
 
-			<p>
-				<label>ID </label><br> <input type="number" id="id_professor"
-					onchange="preencheProfessoresParaAlterar();" name="id_aluno" min="0" size="2" required readonly="readonly">
-			</p>
 
-			<p>
-				<label>Nome </label><br> <input type="text" id="nome"
-					name="nome" size="40" required>
-			</p>
-			<div>
-				<label>CEP </label><br> <input onblur="apiCep()" type="text"
-					id="cep" name="cep" pattern="\d{5}-?\d{3}" required
-					onkeypress="$(this).mask('00000-000')" placeholder="Ex.: 00000-000">
+	<main class="fundo">
+		<br> <br>
+		<br>
+		<div class="row">
+			<div class="card" style="width: 40rem;" id="login">
+				<div class="card-body">
+					<form id="update-form">
+						<fieldset>
+							<legend>Alteração de Professores</legend>
+
+							<div class="form-group">
+								<label>ID </label><br> <input type="number"
+									id="id_professor" class="form-control" name="id_professor"
+									size="2" required readonly="readonly">
+							</div>
+
+							<div class="form-group">
+
+								<label>Nome </label><br> <input type="text" id="nome"
+									class="form-control" name="nome" size="40" required>
+							</div>
+
+
+							<div class="form-group">
+								<label>CEP </label><br> <input onblur="apiCep()"
+									type="text" class="form-control" id="cep" name="cep"
+									pattern="\d{5}-?\d{3}" required
+									onkeypress="$(this).mask('00000-000')"
+									placeholder="Ex.: 00000-000">
+							</div>
+
+
+
+							<div class="form-group">
+								<label>Rua </label><br> <input type="text" id="rua"
+									name="rua" class="form-control" required>
+							</div>
+							<div class="form-group">
+								<label>Número </label><br> <input type="number" id="numero"
+									class="form-control" name="numero" required>
+							</div>
+							<div class="form-group">
+								<label>Bairro </label><br> <input type="text" id="bairro"
+									class="form-control" name="bairro" required>
+							</div>
+
+
+							<div class="form-group">
+								<label>Cidade </label><br> <input type="text" id="cidade"
+									class="form-control" name="cidade" required>
+							</div>
+							<div class="form-group">
+								<label>UF </label><br> <input type="text" id="uf" name="uf"
+									class="form-control" required>
+							</div>
+							<div class="form-group">
+								<label>Complemento </label> <br> <input type="text"
+									class="form-control" id="complemento" name="complemento"
+									required>
+							</div>
+
+
+							<div class="form-group">
+
+								<label>E-Mail </label><br> <input type="email" id="email"
+									class="form-control" name="email" required>
+							</div>
+
+							<div class="form-group">
+								<label>Senha </label><br> <input type="password" id="senha"
+									class="form-control" name="senha" required>
+
+							</div>
+							<button onclick="professoresPutParams()" type="submit"
+								class="btn btn-outline-success">Alterar Professor</button>
+
+							<!-- 			<input type="submit" onclick="alunosPutParams();"> -->
+						</fieldset>
+					</form>
+				</div>
 			</div>
-
-
-			<div>
-				<div>
-					<label>Rua </label><br> <input type="text" id="rua" name="rua"
-						required>
-				</div>
-				<div>
-					<label>Numero </label><br> <input type="number" id="numero"
-						name="numero" required>
-				</div>
-				<div>
-					<label>Bairro </label><br> <input type="text" id="bairro"
-						name="bairro" required>
+		</div>
+		<br> <br> <br>
+	</main>
+	
+	<footer class="mt-auto py-3">
+		<div id="contact-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">copyright @2020</div>
 				</div>
 			</div>
-			<div>
-				<div>
-					<label>Cidade </label><br> <input type="text" id="cidade"
-						name="cidade" required>
-				</div>
-				<div>
-					<label>UF </label><br> <input type="text" id="uf" name="uf"
-						required>
+		</div>
+	</footer>
 
-				</div>
-				<div>
-					<label>Complemento </label> <br> <input type="text"
-						id="complemento" name="complemento" required>
-				</div>
-			</div>
-
-			<p>
-				<label>E-Mail </label><br> <input type="email" id="email"
-					name="email" required>
-			</p>
-			<p>
-				<label>Senha </label><br> <input type="password" id="senha"
-					name="senha" required>
-			</p>
-			<input type="submit" onclick="professoresPutParams()" >
-
-<!-- 			<input type="submit" onclick="alunosPutParams();"> -->
-		</fieldset>
-	</form>
 
 </body>
 </html>

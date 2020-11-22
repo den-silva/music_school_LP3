@@ -258,7 +258,7 @@ function geraTabela(tabela, msg) {
 		console.log(nome);
 
 		let cell = row.insertCell();
-		cell.setAttribute('style', 'text-align: center');
+		cell.setAttribute('style', 'text-align: center; padding: 3px');
 
 		//let btAlterar = document.createElement("button");
 		//		let a = document.createElement("a");

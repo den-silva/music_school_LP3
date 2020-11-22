@@ -29,7 +29,7 @@
 }
 
 .card {
-	background-color: #7FFFD1;
+	background-color: #FFFAF0;
 }
 </style>
 
@@ -48,7 +48,8 @@
 					<form method="post" action="/music_school_LP3/CursosApi">
 						<fieldset>
 							<legend>Novo Curso:</legend>
-
+							<input type="hidden" id="periodo" name="periodo"> 
+							<input type="hidden" id="nivel" name="nivel">
 							<div class="form-group">
 								<label>ID </label><br> <input type="number" id="id_curso"
 									class="form-control" name="id_curso" size="2" required
@@ -61,28 +62,28 @@
 									class="form-control" name="nome" size="40" required>
 							</div>
 
-
 							<div class="form-group">
-								<label>Escolha o Nível </label><br> <select name="cursos"
-									id="nivel">
-									<option value="basico">BÁSICO</option>
-									<option value="inter">INTERMEDIARIO</option>
-									<option value="avancado">AVANCADO</option>
+								<label>Escolha o Nível </label><br> <select
+									name="sel-nivel" id="sel-nivel">
+									<option value="BASICO">BASICO</option>
+									<option value="INTERMEDIARIO">INTERMEDIARIO</option>
+									<option value="AVANCADO">AVANCADO</option>
 								</select>
+
 							</div>
 
+
 							<div class="form-group">
-								<label>Escolha a Duração </label><br> <select name="cursos"
-									id="duracao">
-									<option value="3_meses">3 meses</option>
-									<option value="6_meses">6 meses</option>
-									<option value="9_meses">9 meses</option>
-									<option value="12_meses">12 meses</option>
+								<label>Escolha a Duração </label><br> <select
+									name="sel-periodo" id="sel-periodo">
+									<option value="3 meses">3 meses</option>
+									<option value="6 meses">6 meses</option>
+									<option value="9 meses">9 meses</option>
+									<option value="12 meses">12 meses</option>
 								</select>
 							</div>
-							<button onclick="redirecionar('ViewIndexCursos.html')"
-								type="submit" class="btn btn-outline-success">Inserir
-								Professor</button>
+							<button onclick="guardaParaCursos()" type="submit"
+								class="btn btn-outline-success">Inserir Curso</button>
 
 						</fieldset>
 
@@ -90,7 +91,17 @@
 				</div>
 			</div>
 		</div>
+		<br><br><br>
 	</main>
+	<footer class="mt-auto py-3">
+		<div id="contact-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">copyright @2020</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 
 
 </body>

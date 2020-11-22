@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <!-- <meta charset="ISO-8859-1"> -->
-<title>Cadastro de Alunos</title>
+<title>Cadastro de Cursos</title>
 <!-- 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -14,82 +14,85 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 <script src="_js/cep.js"></script>
-<script src="_js/MetodosAlunos.js"></script>
-<script src="_js/MetodosMatriculas.js"></script>
+<script src="_js/MetodosCursos.js"></script>
 <link rel="stylesheet" href="_css/style.css">
 <link rel="stylesheet" href="_css/bootstrap.css">
 <link rel="stylesheet" href="_css/bootstrap-minty-bootswatch.css">
 <style>
 .fundo {
-	background-image: url(_img/musical1.jpg);
+	background-image: url(_img/musical2.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	position: relative;
 	width: 100%;
-	min-height: 820px;
-	height: 50%;
+	height: 740px;
 }
 
 .card {
 	background-color: #FFFAF0;
+	
 }
 </style>
 
 
 </head>
-<body onload="getTurmas()">
-	<input type="hidden" id="nomeApi" value="MatriculasApi">
-	<input type="hidden" id="idApi" value="id_matricula">
+<body onload="preencheCursosParaAlterar()">
+	<input type="hidden" id="nomeApi" value="CursosApi">
+	<input type="hidden" id="idApi" value="id_curso">
 
 
 	<main class="fundo">
-		<br> <br> <br>
+		<br> <br>
 		<div class="row">
 			<div class="card" style="width: 40rem;" id="login">
 				<div class="card-body">
-					<form method="post" action="/music_school_LP3/MatriculasApi">
+					<form id="update-form">
 						<fieldset>
-							<legend>Nova Matricula:</legend>
-
+							<legend>Alterar Curso:</legend>
+							<input type="hidden" id="periodo" name="periodo"> 
+							<input type="hidden" id="nivel" name="nivel">
 							<div class="form-group">
-								<label>Id Aluno </label><br> <input type="number"
-									id="id_aluno" class="form-control" name="id_aluno" size="2"
-									required readonly="readonly">
+								<label>ID </label><br> <input type="number" id="id_curso"
+									class="form-control" name="id_curso" size="2" required
+									readonly="readonly">
 							</div>
 
 							<div class="form-group">
-								<label>Nome do Aluno </label><br> <input type="text"
-									id="nome_aluno" readonly="readonly" class="form-control"
-									name="nome_aluno" size="40" required>
+
+								<label>Nome </label><br> <input type="text" id="nome"
+									class="form-control" name="nome" size="40" required>
 							</div>
-							<div class="">
-								<label>Lista de Turmas </label><br> <select id="turmas"
-									class="form-control" name="nome">
-									<option value="Selecionar">Selecionar</option>
-									<option value="Selecionar">Selecionar2</option>
+
+							<div class="form-group">
+								<label>Escolha o Nível </label><br> <select class="custom-select"
+									name="sel-nivel" id="sel-nivel">
+									<option value="BASICO">BASICO</option>
+									<option value="INTERMEDIARIO">INTERMEDIARIO</option>
+									<option value="AVANCADO">AVANCADO</option>
+								</select>
+
+							</div>
+
+
+							<div class="form-group">
+								<label>Escolha a Duração </label><br> <select class="custom-select"
+									name="sel-periodo" id="sel-periodo">
+									<option value="3 meses">3 meses</option>
+									<option value="6 meses">6 meses</option>
+									<option value="9 meses">9 meses</option>
+									<option value="12 meses">12 meses</option>
 								</select>
 							</div>
-							
-							<div class="form-group">
-							<label>Status </label><br> <input type="radio" class="radio"
-								name="status" id="ativa"> ATIVA</input> <br><br><input type="radio"
-								class="radio" name="status" id="inativa"> INATIVA</input> <br>
-							<br>
-							</div>
-
-							<button type="submit" class="btn btn-outline-success">Matricular
-								Aluno</button>
+							<button onclick="cursosPutParams()" type="submit"
+								class="btn btn-outline-success">Alterar Curso</button>
 
 						</fieldset>
 
 					</form>
-					<br> <br>
 				</div>
 			</div>
 		</div>
-		<br> <br> <br>
 	</main>
-
 	<footer class="mt-auto py-3">
 		<div id="contact-area">
 			<div class="container">
@@ -132,13 +135,13 @@
 
 
 
-	<form method="post" action="/music_school_LP3/AlunosApi">
+	<form method="post" action="/music_school_LP3/CursosApi">
 		<fieldset>
-			<legend>Novo Aluno:</legend>
+			<legend>Novo Curso:</legend>
 
 			<p>
-				<label>ID </label><br> <input type="number" id="id_aluno"
-					name="id_aluno" size="2" required readonly="readonly" >
+				<label>ID </label><br> <input type="number" id="id_Curso"
+					name="id_Curso" size="2" required readonly="readonly" >
 			
 			<p>
 				<label>Nome </label><br> <input type="text" id="nome"
@@ -192,7 +195,7 @@
 
 			
 
-<button type="submit" >Inserir Aluno</button>
+<button type="submit" >Inserir Curso</button>
 
 
 

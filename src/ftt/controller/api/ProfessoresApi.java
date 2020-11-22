@@ -59,7 +59,7 @@ public class ProfessoresApi extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		request.setCharacterEncoding("ISO-8859-1");
-		response.setCharacterEncoding("ISO-8859-1");
+		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");// Mime type
 
 		Gson gson = new Gson();
@@ -139,7 +139,8 @@ public class ProfessoresApi extends HttpServlet {
 			System.out.println(p);
 
 			response.getWriter().append("{\"status\":\"ok\",\"timestemp\":" + new Date() + "}");
-
+			response.sendRedirect("ViewIndexProfessores.html");
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

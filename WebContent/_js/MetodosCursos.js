@@ -48,25 +48,14 @@ function cursosPutParams() {
 	{
 		"id_curso": document.querySelector('#id_curso').value,
 		"nome": document.querySelector('#nome').value,
-		"rua": document.querySelector('#rua').value,
-		"complemento": document.querySelector('#complemento').value,
-		"numero": document.querySelector('#numero').value,
-		"bairro": document.querySelector('#bairro').value,
-		"cidade": document.querySelector('#cidade').value,
-		"uf": document.querySelector('#uf').value,
-		"email": document.querySelector('#email').value,
-		"senha": document.querySelector('#senha').value,
+		"nivel": document.querySelector('#sel-nivel').value,
+		"periodo": document.querySelector('#sel-periodo').value,
+		
 	};
 	var params = `id_curso=${form.id_curso}
 	&nome=${form.nome}
-	&rua=${form.rua}
-	&complemento=${form.complemento}
-	&numero=${form.numero}
-	&bairro=${form.bairro}
-	&cidade=${form.cidade}
-	&uf=${form.uf}
-	&email=${form.email}
-	&senha=${form.senha}`;
+	&nivel=${form.nivel}
+	&periodo=${form.periodo}`;
 
 	console.log(form);
 
@@ -78,7 +67,7 @@ function cursosPutParams() {
 		//params: JSON.stringify(form), // We send data in JSON format
 		mode: 'cors'
 	}
-	var URL = 'http://localhost:8080/music_school_LP3/cursosApi?' + params;
+	var URL = 'http://localhost:8080/music_school_LP3/CursosApi?' + params;
 
 	fetch(URL, putMethod)
 		.then(function(response) {
@@ -86,31 +75,27 @@ function cursosPutParams() {
 			return response;
 		})
 		.then(function(teste) {
-			console.log(teste)
+			console.log(teste);
+			window.location
+				.assign('http://localhost:8080/music_school_LP3/ViewIndexCursos.html')
 		})
 		.catch((function(error) {
 			log('Falha na Requisição', error);
 		}));
 }
 
-function preenchecursosParaAlterar() {
+function preencheCursosParaAlterar() {
 
 	document.querySelector('#nome').value = '';
-	document.querySelector('#rua').value = '';
-	document.querySelector('#complemento').value = '';
-	document.querySelector('#numero').value = '';
-	document.querySelector('#bairro').value = '';
-	document.querySelector('#cidade').value = '';
-	document.querySelector('#uf').value = '';
-	document.querySelector('#email').value = '';
-	document.querySelector('#senha').value = '';
+	var selNivel = document.getElementById('sel-nivel');
 
-	//var id_curso = document.querySelector('#id_curso').value;
+	var selPeriodo = document.getElementById('sel-periodo');
+
 	var id_curso = recebeId();
 	console.log(id_curso);
 	var form = document.querySelector('#update-form');
 	var url =
-		`http://localhost:8080/music_school_LP3/cursosApi?id_curso=${id_curso}`;
+		`http://localhost:8080/music_school_LP3/CursosApi?id_curso=${id_curso}`;
 
 
 	var myInit = {
@@ -133,27 +118,25 @@ function preenchecursosParaAlterar() {
 				document.querySelector('#id_curso').value = meuJson.id_curso;
 				document.querySelector('#nome').value = meuJson.nome;
 				console.log(meuJson.nome);
-				document.querySelector('#rua').value = meuJson.endereco.rua;
-				document.querySelector('#complemento').value = meuJson.endereco.complemento;
-				document.querySelector('#numero').value = meuJson.endereco.numero;
-				document.querySelector('#bairro').value = meuJson.endereco.bairro;
-				document.querySelector('#cidade').value = meuJson.endereco.cidade;
-				document.querySelector('#uf').value = meuJson.endereco.uf;
-				document.querySelector('#email').value = meuJson.email;
-				document.querySelector('#senha').value = meuJson.senha;
+				selNivel.value = meuJson.nivel;
+				console.log(meuJson.nivel);
+				var p=meuJson.periodo.toString();
+				selPeriodo.value = p.replace(/_/g," ").trim().toLowerCase();
+				console.log(p.replace(/_/g," "));
+				
 			}
 
 		});
 
 }
 
-function deletecursos(id){
-	
+function deletecursos(id) {
+
 	var nomeApi = document.getElementById('nomeApi').value;
-	var idApi = document.getElementById('idApi').value;	
+	var idApi = document.getElementById('idApi').value;
 	console.log(nomeApi);
-	console.log(idApi);	
-	
+	console.log(idApi);
+
 	const putMethod = {
 		method: 'DELETE', // Method itself
 		/*headers: {
@@ -170,10 +153,10 @@ function deletecursos(id){
 			console.log(response);
 			alert(response.json());
 			return response;
-		})		
+		})
 		.catch((function(error) {
 			log('Falha na Requisição', error);
-		}));	
+		}));
 }
 
 function getCursos() {
@@ -232,17 +215,18 @@ function geraTabela(tabela, msg) {
 	for (let element of msg) {
 		let row = tabela.insertRow();
 		for (key in element) {
-			
-				let cell = row.insertCell();
-				let text = document.createTextNode(element[key]);
-				cell.appendChild(text);
-			
+
+			let cell = row.insertCell();
+			let text = document.createTextNode(element[key]);
+			cell.appendChild(text);
+
 
 		}
 		let id = element.id_curso;
 		console.log(id);
 
 		let cell = row.insertCell();
+		cell.setAttribute('style', 'text-align: center; padding: 3px');
 
 		//let btAlterar = document.createElement("button");
 		//		let a = document.createElement("a");
@@ -310,14 +294,14 @@ function apagaId(id) {
 	}
 }
 
-function proximoId() {	
+function proximoId() {
 
 	var nomeApi = document.getElementById('nomeApi').value;
 	var idApi = document.getElementById('idApi').value;
 	console.log(idApi);
 	console.log(idApi);
 	//console.log(nomeApi);
-	
+
 	var url =
 		`http://localhost:8080/music_school_LP3/${nomeApi}?${idApi}=0`;
 
@@ -336,16 +320,33 @@ function proximoId() {
 			console.log(response);
 			return response.json();
 		})
-		.then(function(meuJson) {			
-				console.log(meuJson.proximo);
-				document.getElementById(idApi).value = meuJson.proximo;				
-			
+		.then(function(meuJson) {
+			console.log(meuJson.proximo);
+			document.getElementById(idApi).value = meuJson.proximo;
+
 		});
 
 }
 
-function redirecionar(pagina){
+function redirecionar(pagina) {
 	return location.href(pagina);
+}
+
+function guardaParaCursos() {
+	//	var sel = document.querySelector('input[name="status"]:checked').value;
+	//	console.log(sel);
+	//	document.getElementById('mat_status').value=sel;
+
+	var sel = document.getElementById('sel-nivel');
+	var nivelSel = sel.options[sel.selectedIndex].value.trim();
+
+	var sel2 = document.getElementById('sel-periodo');
+	var periodoSel = sel2.options[sel2.selectedIndex].value.trim();
+
+	document.getElementById('nivel').value = nivelSel;
+	document.getElementById('periodo').value = periodoSel;
+	console.log(document.getElementById('nivel').value);
+	console.log(document.getElementById('periodo').value);
 }
 
 

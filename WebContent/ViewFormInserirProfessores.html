@@ -20,15 +20,16 @@
 <link rel="stylesheet" href="_css/bootstrap-minty-bootswatch.css">
 <style>
 .fundo {
-	background-image: url(_img/musical1.jpg);
+	background-image: url(_img/musical2.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	position: relative;
 	width: 100%;
 	height: 100%;
 }
+
 .card {
-	background-color: #7FFFD1;
+	background-color: #FFFAF0;
 }
 </style>
 
@@ -44,14 +45,14 @@
 		<div class="row">
 			<div class="card" style="width: 40rem;" id="login">
 				<div class="card-body">
-					<form method="post" action="/music_school_LP3/ProfessoresApi" >
+					<form method="post" action="/music_school_LP3/ProfessoresApi">
 						<fieldset>
 							<legend>Novo Professor:</legend>
 
 							<div class="form-group">
-								<label>ID </label><br> <input type="number" id="id_professor"
-									class="form-control" name="id_professor" size="2" required
-									readonly="readonly">
+								<label>ID </label><br> <input type="number"
+									id="id_professor" class="form-control" name="id_professor"
+									size="2" required readonly="readonly">
 							</div>
 
 							<div class="form-group">
@@ -112,17 +113,30 @@
 
 							</div>
 
-							<button onclick="redirecionar('ViewIndexProfessores.html')" type="submit" class="btn btn-outline-success">Inserir
+							<button onclick="redirecionar('ViewIndexProfessores.html')"
+								type="submit" class="btn btn-outline-success">Inserir
 								Professor</button>
 
 						</fieldset>
+						<br> <br>
 
 					</form>
 				</div>
 			</div>
 		</div>
+		<br> <br> <br> <br>
 	</main>
 
+
+	<footer class="mt-auto py-3">
+		<div id="contact-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">copyright @2020</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 
 </body>
 </html>

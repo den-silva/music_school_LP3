@@ -87,6 +87,7 @@ public class TurmasApi extends HttpServlet {
 				ArrayList<Turmas> listaTurmas = dao.findAll();
 
 				response.getWriter().append(gson.toJson(listaTurmas));
+				response.sendRedirect("ViewIndexProfessores.html");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -129,6 +130,7 @@ public class TurmasApi extends HttpServlet {
 			String json = gg.toJson(turma);
 			response.getWriter().append("[{\"status\":\"ok\",\"timestemp\":\"" + new Date() + "\"}, ").append(json)
 					.append("]");
+			response.sendRedirect("ViewIndexProfessores.html");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

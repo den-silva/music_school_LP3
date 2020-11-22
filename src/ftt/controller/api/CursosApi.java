@@ -136,6 +136,7 @@ public class CursosApi extends HttpServlet {
 			
 			response.getWriter()
 			.append("{\"status\":\"ok\",\"timestemp\":" +new Date() +"}");
+			response.sendRedirect("ViewIndexCursos.html");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

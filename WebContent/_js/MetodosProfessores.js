@@ -86,7 +86,9 @@ function professoresPutParams() {
 			return response;
 		})
 		.then(function(teste) {
-			console.log(teste)
+			console.log(teste);
+			window.location
+				.assign('ViewIndexProfessores.html');
 		})
 		.catch((function(error) {
 			log('Falha na Requisição', error);
@@ -238,9 +240,11 @@ function geraTabela(tabela, msg) {
 
 		}
 		let id = element.id_professor;
+		let nome1=element.nome;
 		console.log(id);
 
 		let cell = row.insertCell();
+		cell.setAttribute('style', 'text-align: center; padding: 3px');
 
 		//let btAlterar = document.createElement("button");
 		//		let a = document.createElement("a");
@@ -253,7 +257,7 @@ function geraTabela(tabela, msg) {
 		//btAlterar.appendChild(a);
 		var tagA = `<a href="ViewFormAlterarProfessores.html" 
 		class="btn btn-warning"
-		onclick="passaId(${id})">Alterar ${id}</a>`
+		onclick="passaId(${id})">Alterar</a>`
 		cell.innerHTML += tagA;
 
 
@@ -270,10 +274,18 @@ function geraTabela(tabela, msg) {
 		//		cell.appendChild(e);
 		var tagA2 = `<a href="" 
 		class="btn btn-danger"
-		onclick="apagaId(${id})">Excluir ${id}</a>`;
+		onclick="apagaId(${id})">Excluir</a>`;
 		cell.innerHTML += tagA2;
 
 		cell.innerHTML += ' ';
+		
+		sessionStorage.setItem(id, nome1);
+		var tagA3 = `<a href="ViewInserirTurmas.jsp" 
+		class="btn btn-success" 
+		onclick="passaId(${id})">Cadastrar Turmas</a>`;
+		cell.innerHTML += tagA3;
+
+		//cell.innerHTML += ' ';
 
 		/*let btMatricular = document.createElement("button");
 		let m = document.createElement("a");
@@ -292,10 +304,20 @@ function getFormAlterar() {
 	console.log('Alterar');
 
 }
-
+/*
 function passaId(id) {
 	sessionStorage.setItem('id_professor', id);
 }
+ */
+
+function passaId(id) {
+	sessionStorage.setItem('id_professor', id);	
+}
+
+function passaNome(nome1) {
+	sessionStorage.setItem('nome_professor', nome1);	
+}
+
 
 function recebeId() {
 	return sessionStorage.getItem('id_professor');
@@ -341,9 +363,9 @@ function proximoId() {
 
 }
 
-function redirecionar(pagina){
-	return location.href(pagina);
-}
+//function redirecionar(pagina){
+//	return location.href(pagina);
+//}
 
 
 /*
